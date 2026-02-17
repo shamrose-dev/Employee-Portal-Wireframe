@@ -1,0 +1,3022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biometric Attendance App — Wireframes</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #3B6FE0;
+    --primary-light: #EEF3FF;
+    --primary-dark: #2850B0;
+    --sidebar-bg: #1A1F36;
+    --sidebar-text: #A0A8C0;
+    --sidebar-active: #3B6FE0;
+    --sidebar-active-bg: rgba(59,111,224,0.15);
+    --bg: #F4F6FB;
+    --card-bg: #FFFFFF;
+    --text-dark: #1A1F36;
+    --text-mid: #4A5278;
+    --text-light: #8A93B2;
+    --border: #E4E8F4;
+    --success: #22C55E;
+    --success-light: #DCFCE7;
+    --warning: #F59E0B;
+    --warning-light: #FEF3C7;
+    --danger: #EF4444;
+    --danger-light: #FEE2E2;
+    --info: #06B6D4;
+    --info-light: #CFFAFE;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 2px 16px rgba(59,111,224,0.08);
+    --shadow-lg: 0 8px 32px rgba(59,111,224,0.13);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0F1322;
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  /* ===== NAV (Page Switcher) ===== */
+  .page-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: #0F1322;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+  }
+  .page-nav-label {
+    color: #6B7399;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-right: 8px;
+  }
+  .nav-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #A0A8C0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover { background: rgba(59,111,224,0.2); color: #fff; border-color: rgba(59,111,224,0.4); }
+  .nav-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  /* ===== WRAPPER ===== */
+  .page-wrapper {
+    padding-top: 58px;
+  }
+  .screen {
+    display: none;
+    min-height: calc(100vh - 58px);
+  }
+  .screen.active { display: flex; }
+
+  /* ===== AUTH SCREENS ===== */
+  .auth-screen {
+    background: linear-gradient(135deg, #F4F6FB 0%, #EEF3FF 100%);
+    min-height: calc(100vh - 58px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .auth-screen::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(59,111,224,0.08) 0%, transparent 70%);
+    top: -200px; right: -200px;
+    border-radius: 50%;
+  }
+  .auth-screen::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(59,111,224,0.06) 0%, transparent 70%);
+    bottom: -100px; left: -100px;
+    border-radius: 50%;
+  }
+  .auth-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 44px 44px;
+    width: 460px;
+    box-shadow: 0 20px 60px rgba(59,111,224,0.12);
+    position: relative;
+    z-index: 1;
+  }
+  .auth-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .auth-logo-icon {
+    width: 40px; height: 40px;
+    background: var(--primary);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+  }
+  .auth-logo-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1.1;
+  }
+  .auth-logo-sub { font-size: 11px; color: var(--text-light); font-weight: 400; }
+  .auth-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+  .auth-sub { font-size: 13.5px; color: var(--text-light); margin-bottom: 28px; }
+
+  .tab-row {
+    display: flex;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 4px;
+    margin-bottom: 24px;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 9px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: #fff;
+    color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .form-group { margin-bottom: 18px; }
+  .form-label { font-size: 12.5px; font-weight: 600; color: var(--text-mid); margin-bottom: 7px; display: block; }
+  .form-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    color: var(--text-dark);
+    font-family: 'DM Sans', sans-serif;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--primary); }
+  .form-input.filled { border-color: var(--border); background: var(--bg); color: var(--text-mid); }
+
+  .btn-primary {
+    width: 100%;
+    padding: 13px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+  .divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 20px 0;
+    color: var(--text-light); font-size: 12px;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1;
+    height: 1px; background: var(--border);
+  }
+
+  .btn-outline {
+    width: 100%;
+    padding: 11px;
+    background: #fff;
+    color: var(--text-mid);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+  .auth-footer { text-align: center; margin-top: 24px; font-size: 13px; color: var(--text-light); }
+  .auth-footer a { color: var(--primary); font-weight: 600; text-decoration: none; }
+
+  .info-box {
+    background: var(--primary-light);
+    border: 1px solid rgba(59,111,224,0.2);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 12.5px;
+    color: var(--primary-dark);
+    margin-bottom: 18px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  /* ===== DASHBOARD LAYOUT ===== */
+  .dash-layout {
+    display: flex;
+    width: 100%;
+    min-height: calc(100vh - 58px);
+    background: var(--bg);
+  }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    width: 240px;
+    background: var(--sidebar-bg);
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    flex-shrink: 0;
+  }
+  .sidebar-logo {
+    padding: 0 20px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sidebar-logo-icon {
+    width: 36px; height: 36px;
+    background: var(--primary);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 16px;
+    flex-shrink: 0;
+  }
+  .sidebar-logo-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .sidebar-logo-sub { font-size: 10px; color: var(--sidebar-text); font-weight: 400; }
+
+  .sidebar-section-label {
+    padding: 6px 20px 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(160,168,192,0.5);
+    margin-top: 8px;
+  }
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    margin: 1px 10px;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--sidebar-text);
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+  .sidebar-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+  .sidebar-item.active {
+    background: var(--sidebar-active-bg);
+    color: #fff;
+  }
+  .sidebar-item.active .si-icon { color: var(--sidebar-active); }
+  .si-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+  .sidebar-item .badge {
+    margin-left: auto;
+    background: var(--danger);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+  .sidebar-bottom {
+    margin-top: auto;
+    padding: 16px 10px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 9px;
+  }
+  .sidebar-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary) 0%, #6B9EFF 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .sidebar-user-info { flex: 1; }
+  .sidebar-user-name { font-size: 12.5px; font-weight: 600; color: #fff; }
+  .sidebar-user-role { font-size: 10.5px; color: var(--sidebar-text); }
+
+  /* ===== MAIN CONTENT ===== */
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ===== TOPBAR ===== */
+  .topbar {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .topbar-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+    flex: 1;
+  }
+  .topbar-subtitle {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-light);
+    margin-left: 10px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 12px;
+    width: 220px;
+  }
+  .search-bar input {
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    color: var(--text-dark);
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    width: 100%;
+  }
+  .search-icon { color: var(--text-light); font-size: 14px; }
+  .topbar-icon-btn {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: var(--text-mid);
+    font-size: 15px;
+    position: relative;
+  }
+  .topbar-icon-btn .dot {
+    position: absolute;
+    top: 5px; right: 5px;
+    width: 7px; height: 7px;
+    background: var(--danger);
+    border-radius: 50%;
+    border: 1.5px solid #fff;
+  }
+  .topbar-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary) 0%, #6B9EFF 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 13px; font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* ===== PAGE CONTENT ===== */
+  .page-content {
+    padding: 24px 28px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .card-header {
+    padding: 18px 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text-dark);
+    flex: 1;
+  }
+  .card-body { padding: 16px 20px; }
+  .card-link {
+    font-size: 12px;
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* ===== STAT CARDS ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .stat-card.blue { border-top: 3px solid var(--primary); }
+  .stat-card.green { border-top: 3px solid var(--success); }
+  .stat-card.amber { border-top: 3px solid var(--warning); }
+  .stat-card.red { border-top: 3px solid var(--danger); }
+  .stat-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .stat-icon.blue { background: var(--primary-light); }
+  .stat-icon.green { background: var(--success-light); }
+  .stat-icon.amber { background: var(--warning-light); }
+  .stat-icon.red { background: var(--danger-light); }
+  .stat-label { font-size: 12px; color: var(--text-light); font-weight: 500; }
+  .stat-value {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1;
+  }
+  .stat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 20px;
+  }
+  .stat-badge.up { background: var(--success-light); color: var(--success); }
+  .stat-badge.down { background: var(--danger-light); color: var(--danger); }
+
+  /* ===== GRID LAYOUTS ===== */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+  .grid-7-3 { display: grid; grid-template-columns: 7fr 3fr; gap: 16px; margin-bottom: 16px; }
+  .grid-6-4 { display: grid; grid-template-columns: 6fr 4fr; gap: 16px; margin-bottom: 16px; }
+
+  /* ===== TABLE ===== */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  thead th:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+  thead th:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:hover { background: var(--bg); }
+  tbody td { padding: 12px 14px; font-size: 13px; color: var(--text-dark); vertical-align: middle; }
+  tbody tr:last-child { border-bottom: none; }
+
+  /* ===== STATUS BADGES ===== */
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+  .badge.present { background: var(--success-light); color: #16a34a; }
+  .badge.absent { background: var(--danger-light); color: var(--danger); }
+  .badge.late { background: var(--warning-light); color: #d97706; }
+  .badge.half { background: var(--info-light); color: var(--info); }
+  .badge.active { background: var(--success-light); color: #16a34a; }
+  .badge.inactive { background: #F3F4F6; color: #6B7280; }
+
+  /* ===== CHART PLACEHOLDER ===== */
+  .chart-ph {
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    border: 1.5px dashed var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 13px;
+    gap: 8px;
+  }
+  .chart-ph .chart-icon { font-size: 32px; opacity: 0.5; }
+  .chart-ph .chart-label { font-size: 12px; font-weight: 500; }
+
+  /* Simulated bar chart */
+  .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 100%; padding: 10px; }
+  .bar-group { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+  .bar { width: 100%; background: var(--primary); border-radius: 4px 4px 0 0; opacity: 0.8; min-height: 4px; }
+  .bar.green { background: var(--success); }
+  .bar-label { font-size: 10px; color: var(--text-light); }
+
+  /* Simulated donut */
+  .donut-wrap { display: flex; align-items: center; gap: 20px; }
+  .donut {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: conic-gradient(var(--success) 0deg 252deg, var(--danger) 252deg 306deg, var(--warning) 306deg 360deg);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; flex-shrink: 0;
+  }
+  .donut::after {
+    content: '';
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+  }
+  .donut-center {
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-dark);
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; margin-bottom: 6px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ===== TIMELINE ===== */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .tl-item {
+    display: flex;
+    gap: 14px;
+    padding-bottom: 16px;
+    position: relative;
+  }
+  .tl-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 30px;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .tl-dot {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .tl-dot.in { background: var(--success-light); color: var(--success); }
+  .tl-dot.out { background: var(--danger-light); color: var(--danger); }
+  .tl-content { flex: 1; padding-top: 4px; }
+  .tl-title { font-size: 13px; font-weight: 600; color: var(--text-dark); }
+  .tl-time { font-size: 11.5px; color: var(--text-light); margin-top: 2px; }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-bar { background: var(--bg); border-radius: 99px; overflow: hidden; height: 8px; }
+  .progress-fill { height: 100%; border-radius: 99px; background: var(--primary); }
+  .progress-fill.green { background: var(--success); }
+
+  /* ===== ATTENDANCE CALENDAR ===== */
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  .cal-day-header { text-align: center; font-size: 11px; color: var(--text-light); font-weight: 600; padding: 4px 0; }
+  .cal-day {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .cal-day.present { background: var(--success-light); color: #16a34a; }
+  .cal-day.absent { background: var(--danger-light); color: var(--danger); }
+  .cal-day.late { background: var(--warning-light); color: #d97706; }
+  .cal-day.weekend { color: var(--text-light); background: #F9FAFB; }
+  .cal-day.today { background: var(--primary); color: #fff; font-weight: 700; }
+  .cal-day.empty { background: transparent; }
+
+  /* ===== FILTER ROW ===== */
+  .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .filter-select {
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--text-mid);
+    font-family: 'DM Sans', sans-serif;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+  }
+  .filter-btn {
+    padding: 8px 16px;
+    border: 1.5px solid var(--primary);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--primary);
+    font-family: 'DM Sans', sans-serif;
+    background: var(--primary-light);
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .filter-btn-outline {
+    padding: 8px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--text-mid);
+    font-family: 'DM Sans', sans-serif;
+    background: #fff;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .ml-auto { margin-left: auto; }
+
+  /* ===== USER AVATAR CELL ===== */
+  .user-cell { display: flex; align-items: center; gap: 10px; }
+  .user-ava {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .user-name { font-size: 13px; font-weight: 600; color: var(--text-dark); }
+  .user-email { font-size: 11.5px; color: var(--text-light); }
+
+  /* ===== SECTION TITLE ===== */
+  .section-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ===== ACTION BUTTONS ===== */
+  .action-btn {
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12.5px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    border: none;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .action-btn.primary { background: var(--primary); color: #fff; }
+  .action-btn.ghost { background: var(--bg); color: var(--text-mid); border: 1.5px solid var(--border); }
+  .action-btn.success { background: var(--success-light); color: #16a34a; }
+
+  /* ===== INFO ROW ===== */
+  .info-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-key { font-size: 12.5px; color: var(--text-light); width: 140px; flex-shrink: 0; }
+  .info-val { font-size: 13px; font-weight: 500; color: var(--text-dark); }
+
+  /* ===== TODAY CARD ===== */
+  .today-card {
+    background: linear-gradient(135deg, var(--primary) 0%, #5B8BF0 100%);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    color: #fff;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .today-greeting { font-size: 13px; opacity: 0.8; margin-bottom: 4px; }
+  .today-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+  .today-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+  .today-chip {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .today-chip-label { opacity: 0.75; font-size: 10.5px; }
+  .today-chip-val { font-size: 14px; font-weight: 700; }
+  .today-icon-wrap { font-size: 64px; opacity: 0.15; }
+
+  /* ===== PROFILE SCREEN ===== */
+  .profile-header {
+    background: linear-gradient(135deg, var(--primary) 0%, #5B8BF0 100%);
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: 28px 24px 56px;
+    position: relative;
+  }
+  .profile-avatar-wrap {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 800; color: #fff;
+    border: 3px solid rgba(255,255,255,0.4);
+    position: absolute;
+    bottom: -40px;
+    left: 24px;
+  }
+  .profile-body { padding: 52px 24px 20px; }
+
+  /* ===== ALERTS ===== */
+  .alert {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12.5px;
+    margin-bottom: 14px;
+  }
+  .alert.warning { background: var(--warning-light); border: 1px solid #fcd34d; color: #92400e; }
+  .alert.success { background: var(--success-light); border: 1px solid #86efac; color: #166534; }
+
+  /* Loading dots */
+  .sparkline {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 30px;
+  }
+  .sp-bar {
+    flex: 1;
+    background: rgba(59,111,224,0.2);
+    border-radius: 2px;
+    min-height: 4px;
+  }
+
+  /* ===== RESPONSIVE MINI DISPLAY ===== */
+  .screen-label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: #6B7399;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 8px 28px 4px;
+    background: #0F1322;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<div class="page-nav">
+  <span class="page-nav-label">📐 Wireframes</span>
+  <button class="nav-btn active" onclick="showPage('login')">🔐 Login</button>
+  <button class="nav-btn" onclick="showPage('register-standard')">📝 Register (Standard)</button>
+  <button class="nav-btn" onclick="showPage('register-ldap')">🏢 Register (LDAP)</button>
+  <button class="nav-btn" onclick="showPage('forgot')">🔑 Forgot Password</button>
+  <span style="color:rgba(255,255,255,0.15);font-size:16px;">|</span>
+  <button class="nav-btn" onclick="showPage('emp-dashboard')">👤 Emp Dashboard</button>
+  <button class="nav-btn" onclick="showPage('emp-daily')">📅 Daily Attendance</button>
+  <button class="nav-btn" onclick="showPage('emp-monthly')">📊 Monthly Report</button>
+  <button class="nav-btn" onclick="showPage('emp-analytics')">📈 Analytics</button>
+  <button class="nav-btn" onclick="showPage('emp-profile')">🙍 Profile</button>
+  <button class="nav-btn" onclick="showPage('emp-settings')">⚙️ Settings</button>
+  <span style="color:rgba(255,255,255,0.15);font-size:16px;">|</span>
+  <button class="nav-btn" onclick="showPage('admin-dashboard')">🛡️ Admin Dashboard</button>
+  <button class="nav-btn" onclick="showPage('admin-employees')">👥 All Employees</button>
+  <button class="nav-btn" onclick="showPage('admin-detail')">🔍 Employee Detail</button>
+  <button class="nav-btn" onclick="showPage('admin-departments')">🏢 Departments</button>
+  <button class="nav-btn" onclick="showPage('admin-analytics')">📈 Admin Analytics</button>
+  <button class="nav-btn" onclick="showPage('admin-reports')">📤 Reports & Export</button>
+  <button class="nav-btn" onclick="showPage('admin-usermgmt')">🔧 User Management</button>
+  <button class="nav-btn" onclick="showPage('admin-alerts')">🔔 Alerts</button>
+</div>
+<div class="page-wrapper">
+
+<!-- ======================================================= -->
+<!-- PAGE 1: LOGIN -->
+<!-- ======================================================= -->
+<div id="login" class="screen active">
+<div class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">🖐</div>
+      <div>
+        <div class="auth-logo-text">AttendX</div>
+        <div class="auth-logo-sub">Biometric Attendance Portal</div>
+      </div>
+    </div>
+    <div class="auth-title">Welcome back</div>
+    <div class="auth-sub">Sign in to view your attendance records</div>
+    <div class="tab-row">
+      <button class="tab-btn active">🏢 Organization (LDAP)</button>
+      <button class="tab-btn">📧 Email & Password</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Organization Email</label>
+      <input class="form-input filled" value="john.doe@company.com" readonly>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input filled" type="password" value="••••••••" readonly>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-top:-8px;margin-bottom:16px;">
+      <a style="font-size:12.5px;color:var(--primary);font-weight:600;cursor:pointer;">Forgot Password?</a>
+    </div>
+    <button class="btn-primary">Sign In with LDAP →</button>
+    <div class="auth-footer">
+      Don't have an account? <a href="#">Register here</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 2: REGISTER STANDARD -->
+<!-- ======================================================= -->
+<div id="register-standard" class="screen">
+<div class="auth-screen">
+  <div class="auth-card" style="width:500px;">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">🖐</div>
+      <div>
+        <div class="auth-logo-text">AttendX</div>
+        <div class="auth-logo-sub">Biometric Attendance Portal</div>
+      </div>
+    </div>
+    <div class="auth-title">Create Account</div>
+    <div class="auth-sub">Register using your Employee ID to get started</div>
+    <div class="info-box">
+      ℹ️ Your Employee ID is used to verify your identity and link your account to the biometric system.
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="form-group">
+        <label class="form-label">Employee ID *</label>
+        <input class="form-input filled" value="EMP-2024-0042" readonly>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-input filled" value="Auto-filled from DB" style="color:var(--text-light);" readonly>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Work Email *</label>
+      <input class="form-input filled" value="john.doe@company.com" readonly>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="form-group">
+        <label class="form-label">Password *</label>
+        <input class="form-input filled" type="password" value="••••••••" readonly>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm Password *</label>
+        <input class="form-input filled" type="password" value="••••••••" readonly>
+      </div>
+    </div>
+    <div style="background:var(--success-light);border:1px solid #86efac;border-radius:8px;padding:10px 12px;font-size:12px;color:#166534;margin-bottom:16px;">
+      ✅ Employee ID verified — John Doe found in system (Engineering Dept)
+    </div>
+    <button class="btn-primary">Create Account →</button>
+    <div class="auth-footer">Already have an account? <a href="#">Sign in</a></div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 3: REGISTER LDAP -->
+<!-- ======================================================= -->
+<div id="register-ldap" class="screen">
+<div class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">🖐</div>
+      <div>
+        <div class="auth-logo-text">AttendX</div>
+        <div class="auth-logo-sub">Biometric Attendance Portal</div>
+      </div>
+    </div>
+    <div class="auth-title">Quick Registration</div>
+    <div class="auth-sub">Use your organization account — no extra setup needed</div>
+    <div class="tab-row">
+      <button class="tab-btn">📋 Standard (Employee ID)</button>
+      <button class="tab-btn active">🏢 Organization (LDAP)</button>
+    </div>
+    <div class="info-box">
+      🏢 Sign in with your organization email and password. We'll automatically find your employee profile.
+    </div>
+    <div class="form-group">
+      <label class="form-label">Organization Email</label>
+      <input class="form-input filled" value="john.doe@company.com" readonly>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Organization Password</label>
+      <input class="form-input filled" type="password" value="••••••••" readonly>
+    </div>
+    <button class="btn-primary">Continue with Organization Account →</button>
+    <div class="divider">or</div>
+    <button class="btn-outline">📋 Register with Employee ID instead</button>
+    <div class="auth-footer">Already have an account? <a href="#">Sign in</a></div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 4: FORGOT PASSWORD -->
+<!-- ======================================================= -->
+<div id="forgot" class="screen">
+<div class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">🖐</div>
+      <div>
+        <div class="auth-logo-text">AttendX</div>
+        <div class="auth-logo-sub">Biometric Attendance Portal</div>
+      </div>
+    </div>
+    <div class="auth-title">Reset Password</div>
+    <div class="auth-sub">Enter your work email and we'll send you a reset link</div>
+    <div class="form-group" style="margin-top:8px;">
+      <label class="form-label">Work Email</label>
+      <input class="form-input filled" value="john.doe@company.com" readonly>
+    </div>
+    <div class="alert success">✅ Reset link sent! Check your inbox at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c3a9acabadeda7aca683a0acaeb3a2adbaeda0acae">[email&#160;protected]</a></div>
+    <button class="btn-primary">Send Reset Link</button>
+    <div class="auth-footer" style="margin-top:16px;">
+      <a href="#">← Back to Login</a>
+    </div>
+    <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);">
+      <div style="font-size:12px;color:var(--text-light);text-align:center;margin-bottom:12px;">LDAP users cannot reset password here</div>
+      <button class="btn-outline" style="font-size:12.5px;">🏢 Contact IT Admin for LDAP password reset</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 5: EMPLOYEE DASHBOARD -->
+<!-- ======================================================= -->
+<div id="emp-dashboard" class="screen">
+<div class="dash-layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">🖐</div>
+      <div>
+        <div class="sidebar-logo-text">AttendX</div>
+        <div class="sidebar-logo-sub">My Portal</div>
+      </div>
+    </div>
+    <div class="sidebar-section-label">Menu</div>
+    <div class="sidebar-item active"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item"><span class="si-icon">📅</span> Daily Attendance</div>
+    <div class="sidebar-item"><span class="si-icon">📊</span> Monthly Report</div>
+    <div class="sidebar-item"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-section-label">Account</div>
+    <div class="sidebar-item"><span class="si-icon">🙍</span> My Profile</div>
+    <div class="sidebar-item"><span class="si-icon">⚙️</span> Settings</div>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">JD</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">John Doe</div>
+          <div class="sidebar-user-role">Employee · Engineering</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MAIN -->
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Dashboard <span class="topbar-subtitle">Monday, Feb 17 2026</span></div>
+      <div class="search-bar"><span class="search-icon">🔍</span><input placeholder="Search..."></div>
+      <div class="topbar-icon-btn">🔔<span class="dot"></span></div>
+      <div class="topbar-avatar">JD</div>
+    </div>
+    <div class="page-content">
+
+      <!-- TODAY HERO CARD -->
+      <div class="today-card">
+        <div>
+          <div class="today-greeting">Good Morning 👋</div>
+          <div class="today-name">John Doe</div>
+          <div class="today-chips">
+            <div class="today-chip">
+              <span class="today-chip-label">Check In</span>
+              <span class="today-chip-val">09:02 AM</span>
+            </div>
+            <div class="today-chip">
+              <span class="today-chip-label">Check Out</span>
+              <span class="today-chip-val">—</span>
+            </div>
+            <div class="today-chip">
+              <span class="today-chip-label">Hours Today</span>
+              <span class="today-chip-val">3h 42m</span>
+            </div>
+            <div class="today-chip">
+              <span class="today-chip-label">Status</span>
+              <span class="today-chip-val">🟢 In Office</span>
+            </div>
+          </div>
+        </div>
+        <div class="today-icon-wrap">🖐</div>
+      </div>
+
+      <!-- STAT CARDS -->
+      <div class="stats-grid">
+        <div class="stat-card blue">
+          <div class="stat-icon blue">📅</div>
+          <div class="stat-label">Present Days (Feb)</div>
+          <div class="stat-value">13</div>
+          <span class="stat-badge up">↑ 2 vs Jan</span>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon green">⏱</div>
+          <div class="stat-label">Avg. Working Hours</div>
+          <div class="stat-value">8.4h</div>
+          <span class="stat-badge up">↑ 0.3h</span>
+        </div>
+        <div class="stat-card amber">
+          <div class="stat-icon amber">⚠️</div>
+          <div class="stat-label">Late Arrivals (Feb)</div>
+          <div class="stat-value">2</div>
+          <span class="stat-badge down">↑ 1 vs Jan</span>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-icon red">🚫</div>
+          <div class="stat-label">Absent Days (Feb)</div>
+          <div class="stat-value">1</div>
+          <span class="stat-badge up">↓ 2 vs Jan</span>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW -->
+      <div class="grid-7-3">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Working Hours — Last 7 Days</div>
+            <span class="card-link">View All →</span>
+          </div>
+          <div class="card-body">
+            <div class="bar-chart" style="height:140px;">
+              <div class="bar-group"><div class="bar" style="height:75%;"></div><div class="bar-label">Mon</div></div>
+              <div class="bar-group"><div class="bar" style="height:90%;"></div><div class="bar-label">Tue</div></div>
+              <div class="bar-group"><div class="bar" style="height:60%;"></div><div class="bar-label">Wed</div></div>
+              <div class="bar-group"><div class="bar" style="height:85%;"></div><div class="bar-label">Thu</div></div>
+              <div class="bar-group"><div class="bar" style="height:95%;"></div><div class="bar-label">Fri</div></div>
+              <div class="bar-group"><div class="bar" style="height:0%;background:var(--border);"></div><div class="bar-label">Sat</div></div>
+              <div class="bar-group"><div class="bar" style="height:0%;background:var(--border);"></div><div class="bar-label">Sun</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Feb Attendance</div>
+          </div>
+          <div class="card-body">
+            <div class="donut-wrap" style="flex-direction:column;align-items:flex-start;gap:14px;">
+              <div style="display:flex;align-items:center;gap:16px;">
+                <div class="donut">
+                  <div class="donut-center">70%</div>
+                </div>
+                <div>
+                  <div class="legend-item"><div class="legend-dot" style="background:var(--success)"></div><span style="font-size:12px;">Present <strong>13</strong></span></div>
+                  <div class="legend-item"><div class="legend-dot" style="background:var(--danger)"></div><span style="font-size:12px;">Absent <strong>1</strong></span></div>
+                  <div class="legend-item"><div class="legend-dot" style="background:var(--warning)"></div><span style="font-size:12px;">Late <strong>2</strong></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT ACTIVITY + QUICK INFO -->
+      <div class="grid-6-4">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Recent Attendance Log</div>
+            <span class="card-link">View All →</span>
+          </div>
+          <div class="card-body" style="padding:0 20px;">
+            <div class="table-wrap">
+              <table>
+                <thead><tr>
+                  <th>Date</th><th>Check In</th><th>Check Out</th><th>Hours</th><th>Status</th>
+                </tr></thead>
+                <tbody>
+                  <tr><td>17 Feb</td><td>09:02</td><td>—</td><td>3h 42m</td><td><span class="badge present">Present</span></td></tr>
+                  <tr><td>16 Feb</td><td>09:15</td><td>18:10</td><td>8h 55m</td><td><span class="badge late">Late</span></td></tr>
+                  <tr><td>15 Feb</td><td>08:58</td><td>18:01</td><td>9h 03m</td><td><span class="badge present">Present</span></td></tr>
+                  <tr><td>14 Feb</td><td>—</td><td>—</td><td>—</td><td><span class="badge absent">Absent</span></td></tr>
+                  <tr><td>13 Feb</td><td>08:55</td><td>18:00</td><td>9h 05m</td><td><span class="badge present">Present</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Punctuality Score</div>
+          </div>
+          <div class="card-body">
+            <div style="text-align:center;margin:10px 0 20px;">
+              <div style="font-size:40px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:var(--success);">88%</div>
+              <div style="font-size:12px;color:var(--text-light);">On-time arrivals this month</div>
+            </div>
+            <div style="margin-bottom:10px;">
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>On-time</span><span style="font-weight:600;">11 days</span></div>
+              <div class="progress-bar"><div class="progress-fill green" style="width:88%"></div></div>
+            </div>
+            <div style="margin-bottom:10px;">
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>Late</span><span style="font-weight:600;">2 days</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:12%;background:var(--warning)"></div></div>
+            </div>
+            <div style="margin-top:16px;">
+              <button class="action-btn primary" style="width:100%;justify-content:center;">📄 Download Report</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 6: EMPLOYEE DAILY ATTENDANCE -->
+<!-- ======================================================= -->
+<div id="emp-daily" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">My Portal</div></div></div>
+    <div class="sidebar-section-label">Menu</div>
+    <div class="sidebar-item"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item active"><span class="si-icon">📅</span> Daily Attendance</div>
+    <div class="sidebar-item"><span class="si-icon">📊</span> Monthly Report</div>
+    <div class="sidebar-item"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-section-label">Account</div>
+    <div class="sidebar-item"><span class="si-icon">🙍</span> My Profile</div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar">JD</div><div class="sidebar-user-info"><div class="sidebar-user-name">John Doe</div><div class="sidebar-user-role">Employee · Engineering</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Daily Attendance</div>
+      <div class="topbar-icon-btn">🔔</div>
+      <div class="topbar-avatar">JD</div>
+    </div>
+    <div class="page-content">
+      <div class="grid-6-4">
+        <!-- CALENDAR -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📅 February 2026</div>
+            <div style="display:flex;gap:6px;">
+              <button class="action-btn ghost">‹</button>
+              <button class="action-btn ghost">›</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="cal-grid" style="margin-bottom:8px;">
+              <div class="cal-day-header">Sun</div>
+              <div class="cal-day-header">Mon</div>
+              <div class="cal-day-header">Tue</div>
+              <div class="cal-day-header">Wed</div>
+              <div class="cal-day-header">Thu</div>
+              <div class="cal-day-header">Fri</div>
+              <div class="cal-day-header">Sat</div>
+              <!-- Week 1 -->
+              <div class="cal-day empty"></div>
+              <div class="cal-day present">2</div>
+              <div class="cal-day present">3</div>
+              <div class="cal-day present">4</div>
+              <div class="cal-day present">5</div>
+              <div class="cal-day present">6</div>
+              <div class="cal-day weekend">7</div>
+              <!-- Week 2 -->
+              <div class="cal-day weekend">8</div>
+              <div class="cal-day present">9</div>
+              <div class="cal-day late">10</div>
+              <div class="cal-day present">11</div>
+              <div class="cal-day present">12</div>
+              <div class="cal-day present">13</div>
+              <div class="cal-day weekend">14</div>
+              <!-- Week 3 -->
+              <div class="cal-day weekend">15</div>
+              <div class="cal-day absent">16</div>
+              <div class="cal-day today">17</div>
+              <div class="cal-day" style="color:var(--text-light);">18</div>
+              <div class="cal-day" style="color:var(--text-light);">19</div>
+              <div class="cal-day" style="color:var(--text-light);">20</div>
+              <div class="cal-day weekend">21</div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+              <div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><div style="width:12px;height:12px;background:var(--success-light);border-radius:3px;"></div>Present</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><div style="width:12px;height:12px;background:var(--danger-light);border-radius:3px;"></div>Absent</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><div style="width:12px;height:12px;background:var(--warning-light);border-radius:3px;"></div>Late</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><div style="width:12px;height:12px;background:var(--primary);border-radius:3px;"></div>Today</div>
+            </div>
+          </div>
+        </div>
+        <!-- SELECTED DAY DETAIL -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Today — Feb 17, 2026</div>
+              <span class="badge present">Present</span>
+            </div>
+            <div class="card-body">
+              <div class="timeline">
+                <div class="tl-item">
+                  <div class="tl-dot in">↓</div>
+                  <div class="tl-content">
+                    <div class="tl-title">Check In</div>
+                    <div class="tl-time">09:02 AM · On Time ✅</div>
+                  </div>
+                </div>
+                <div class="tl-item">
+                  <div class="tl-dot" style="background:var(--info-light);color:var(--info);">⏱</div>
+                  <div class="tl-content">
+                    <div class="tl-title">Currently Working</div>
+                    <div class="tl-time">3h 42m elapsed</div>
+                  </div>
+                </div>
+                <div class="tl-item">
+                  <div class="tl-dot out" style="opacity:0.4;">↑</div>
+                  <div class="tl-content">
+                    <div class="tl-title" style="opacity:0.4;">Check Out</div>
+                    <div class="tl-time" style="opacity:0.4;">Pending...</div>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
+                <div class="info-row"><span class="info-key">Date</span><span class="info-val">Monday, Feb 17 2026</span></div>
+                <div class="info-row"><span class="info-key">Department</span><span class="info-val">Engineering</span></div>
+                <div class="info-row"><span class="info-key">Working Hours</span><span class="info-val">3h 42m (ongoing)</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Previous Day — Feb 16</div><span class="badge late">Late</span></div>
+            <div class="card-body">
+              <div class="info-row"><span class="info-key">Check In</span><span class="info-val">09:15 AM <span style="color:var(--warning);font-size:11px;">+15 min late</span></span></div>
+              <div class="info-row"><span class="info-key">Check Out</span><span class="info-val">18:10 PM</span></div>
+              <div class="info-row"><span class="info-key">Total Hours</span><span class="info-val">8h 55m</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 7: EMPLOYEE MONTHLY REPORT -->
+<!-- ======================================================= -->
+<div id="emp-monthly" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">My Portal</div></div></div>
+    <div class="sidebar-section-label">Menu</div>
+    <div class="sidebar-item"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item"><span class="si-icon">📅</span> Daily Attendance</div>
+    <div class="sidebar-item active"><span class="si-icon">📊</span> Monthly Report</div>
+    <div class="sidebar-item"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-section-label">Account</div>
+    <div class="sidebar-item"><span class="si-icon">🙍</span> My Profile</div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar">JD</div><div class="sidebar-user-info"><div class="sidebar-user-name">John Doe</div><div class="sidebar-user-role">Employee</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Monthly Report</div>
+      <div class="ml-auto" style="display:flex;gap:10px;">
+        <button class="action-btn ghost">📄 Export PDF</button>
+        <button class="action-btn primary">📊 Export Excel</button>
+      </div>
+      <div class="topbar-avatar">JD</div>
+    </div>
+    <div class="page-content">
+      <!-- MONTH SELECTOR + SUMMARY -->
+      <div class="filter-row">
+        <select class="filter-select"><option>February 2026</option></select>
+        <select class="filter-select"><option>January 2026</option></select>
+        <button class="filter-btn">Apply</button>
+        <div class="ml-auto" style="font-size:12.5px;color:var(--text-light);">Showing: Feb 1 – Feb 17, 2026</div>
+      </div>
+      <!-- SUMMARY CARDS -->
+      <div class="stats-grid" style="grid-template-columns:repeat(5,1fr);margin-bottom:20px;">
+        <div class="stat-card blue" style="padding:16px;gap:6px;"><div class="stat-label" style="font-size:11px;">Working Days</div><div class="stat-value" style="font-size:24px;">17</div></div>
+        <div class="stat-card green" style="padding:16px;gap:6px;"><div class="stat-label" style="font-size:11px;">Present Days</div><div class="stat-value" style="font-size:24px;color:var(--success);">13</div></div>
+        <div class="stat-card red" style="padding:16px;gap:6px;"><div class="stat-label" style="font-size:11px;">Absent Days</div><div class="stat-value" style="font-size:24px;color:var(--danger);">1</div></div>
+        <div class="stat-card amber" style="padding:16px;gap:6px;"><div class="stat-label" style="font-size:11px;">Late Arrivals</div><div class="stat-value" style="font-size:24px;color:var(--warning);">2</div></div>
+        <div class="stat-card blue" style="padding:16px;gap:6px;"><div class="stat-label" style="font-size:11px;">Total Hours</div><div class="stat-value" style="font-size:24px;">112h</div></div>
+      </div>
+      <!-- TABLE -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">Detailed Attendance Log — February 2026</div></div>
+        <div class="card-body" style="padding:0 0 16px;">
+          <div class="table-wrap" style="padding:0 16px;">
+            <table>
+              <thead><tr><th>#</th><th>Date</th><th>Day</th><th>Check In</th><th>Check Out</th><th>Working Hours</th><th>Status</th><th>Note</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Feb 2</td><td>Mon</td><td>08:58</td><td>18:01</td><td>9h 03m</td><td><span class="badge present">Present</span></td><td>—</td></tr>
+                <tr><td>2</td><td>Feb 3</td><td>Tue</td><td>09:00</td><td>18:00</td><td>9h 00m</td><td><span class="badge present">Present</span></td><td>—</td></tr>
+                <tr><td>3</td><td>Feb 4</td><td>Wed</td><td>08:55</td><td>18:05</td><td>9h 10m</td><td><span class="badge present">Present</span></td><td>—</td></tr>
+                <tr><td>4</td><td>Feb 5</td><td>Thu</td><td>08:52</td><td>17:58</td><td>9h 06m</td><td><span class="badge present">Present</span></td><td>—</td></tr>
+                <tr><td>5</td><td>Feb 6</td><td>Fri</td><td>09:10</td><td>18:10</td><td>9h 00m</td><td><span class="badge late">Late</span></td><td>+10 min</td></tr>
+                <tr><td style="color:var(--text-light);">—</td><td>Feb 7</td><td style="color:var(--text-light);">Sat</td><td>—</td><td>—</td><td>—</td><td><span class="badge" style="background:#F3F4F6;color:#6B7280;">Weekend</span></td><td>—</td></tr>
+                <tr><td>6</td><td>Feb 9</td><td>Mon</td><td>09:00</td><td>18:00</td><td>9h 00m</td><td><span class="badge present">Present</span></td><td>—</td></tr>
+                <tr><td>7</td><td>Feb 10</td><td>Tue</td><td>09:20</td><td>18:15</td><td>8h 55m</td><td><span class="badge late">Late</span></td><td>+20 min</td></tr>
+                <tr><td style="color:var(--text-light);">—</td><td>Feb 16</td><td>Mon</td><td>—</td><td>—</td><td>—</td><td><span class="badge absent">Absent</span></td><td>—</td></tr>
+                <tr><td>13</td><td>Feb 17</td><td>Tue</td><td>09:02</td><td>—</td><td>ongoing</td><td><span class="badge present">Present</span></td><td>Today</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 8: EMPLOYEE ANALYTICS -->
+<!-- ======================================================= -->
+<div id="emp-analytics" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">My Portal</div></div></div>
+    <div class="sidebar-section-label">Menu</div>
+    <div class="sidebar-item"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item"><span class="si-icon">📅</span> Daily Attendance</div>
+    <div class="sidebar-item"><span class="si-icon">📊</span> Monthly Report</div>
+    <div class="sidebar-item active"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-section-label">Account</div>
+    <div class="sidebar-item"><span class="si-icon">🙍</span> My Profile</div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar">JD</div><div class="sidebar-user-info"><div class="sidebar-user-name">John Doe</div><div class="sidebar-user-role">Employee</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">My Analytics</div>
+      <select class="filter-select" style="margin-left:auto;">
+        <option>Last 6 Months</option><option>Last 3 Months</option><option>This Year</option>
+      </select>
+      <div class="topbar-avatar">JD</div>
+    </div>
+    <div class="page-content">
+      <!-- KPI ROW -->
+      <div class="stats-grid" style="margin-bottom:20px;">
+        <div class="stat-card blue">
+          <div class="stat-icon blue">🎯</div>
+          <div class="stat-label">Punctuality Score</div>
+          <div class="stat-value" style="color:var(--success);">88%</div>
+          <span class="stat-badge up">↑ 3% vs last</span>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon green">⏰</div>
+          <div class="stat-label">Avg Daily Hours</div>
+          <div class="stat-value">8.7h</div>
+          <span class="stat-badge up">↑ 0.4h</span>
+        </div>
+        <div class="stat-card amber">
+          <div class="stat-icon amber">📆</div>
+          <div class="stat-label">Attendance Rate</div>
+          <div class="stat-value">94%</div>
+          <span class="stat-badge up">↑ 2%</span>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-icon red">🌙</div>
+          <div class="stat-label">Early Departures</div>
+          <div class="stat-value">3</div>
+          <span class="stat-badge down">↑ 1 vs last</span>
+        </div>
+      </div>
+      <!-- CHARTS ROW -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">📊 Monthly Working Hours Trend</div></div>
+          <div class="card-body">
+            <div class="bar-chart" style="height:160px;">
+              <div class="bar-group"><div class="bar green" style="height:88%;"></div><div class="bar-label">Sep</div></div>
+              <div class="bar-group"><div class="bar green" style="height:72%;"></div><div class="bar-label">Oct</div></div>
+              <div class="bar-group"><div class="bar green" style="height:95%;"></div><div class="bar-label">Nov</div></div>
+              <div class="bar-group"><div class="bar green" style="height:60%;"></div><div class="bar-label">Dec</div></div>
+              <div class="bar-group"><div class="bar green" style="height:80%;"></div><div class="bar-label">Jan</div></div>
+              <div class="bar-group"><div class="bar" style="height:70%;"></div><div class="bar-label">Feb</div></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-light);margin-top:6px;">
+              <span>160h</span><span>avg target</span><span>200h</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🥧 Attendance Breakdown</div></div>
+          <div class="card-body">
+            <div class="donut-wrap">
+              <div style="position:relative;">
+                <div class="donut" style="width:120px;height:120px;"></div>
+                <div class="donut-center" style="font-size:18px;">94%</div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:var(--text-light);margin-bottom:10px;">6 MONTHS BREAKDOWN</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--success)"></div><span>Present <strong>118 days</strong></span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--danger)"></div><span>Absent <strong>5 days</strong></span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--warning)"></div><span>Late <strong>8 days</strong></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- LOGIN TIME + STREAK -->
+      <div class="grid-6-4">
+        <div class="card">
+          <div class="card-header"><div class="card-title">⏰ Daily Login Time (Feb)</div></div>
+          <div class="card-body">
+            <div style="height:100px;display:flex;align-items:flex-end;gap:5px;padding-bottom:4px;">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <div style="width:100%;height:20px;background:var(--success-light);border-radius:4px;"></div>
+                <span style="font-size:9px;color:var(--text-light);">2</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <div style="width:100%;height:20px;background:var(--success-light);border-radius:4px;"></div>
+                <span style="font-size:9px;color:var(--text-light);">3</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <div style="width:100%;height:20px;background:var(--success-light);border-radius:4px;"></div>
+                <span style="font-size:9px;color:var(--text-light);">4</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <div style="width:100%;height:35px;background:var(--warning-light);border-radius:4px;"></div>
+                <span style="font-size:9px;color:var(--text-light);">6</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <div style="width:100%;height:20px;background:var(--success-light);border-radius:4px;"></div>
+                <span style="font-size:9px;color:var(--text-light);">9</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <div style="width:100%;height:50px;background:var(--warning-light);border-radius:4px;"></div>
+                <span style="font-size:9px;color:var(--text-light);">10</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <div style="width:100%;height:20px;background:var(--success-light);border-radius:4px;"></div>
+                <span style="font-size:9px;color:var(--text-light);">11</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <div style="width:100%;height:20px;background:var(--success-light);border-radius:4px;"></div>
+                <span style="font-size:9px;color:var(--text-light);">17</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;font-size:11px;color:var(--text-light);margin-top:4px;">
+              <span style="display:flex;align-items:center;gap:4px;"><div style="width:10px;height:10px;background:var(--success-light);border-radius:2px;"></div>On-time (&lt;09:05)</span>
+              <span style="display:flex;align-items:center;gap:4px;"><div style="width:10px;height:10px;background:var(--warning-light);border-radius:2px;"></div>Late (&gt;09:05)</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🔥 Streak & Milestones</div></div>
+          <div class="card-body">
+            <div style="text-align:center;padding:10px 0 16px;">
+              <div style="font-size:44px;">🔥</div>
+              <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--warning);">7</div>
+              <div style="font-size:12px;color:var(--text-light);">day on-time streak</div>
+            </div>
+            <div style="padding-top:14px;border-top:1px solid var(--border);">
+              <div class="info-row"><span class="info-key">Best Streak</span><span class="info-val">15 days 🏆</span></div>
+              <div class="info-row"><span class="info-key">Total Present</span><span class="info-val">118 days</span></div>
+              <div class="info-row"><span class="info-key">Since Joined</span><span class="info-val">Mar 2025</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 9: EMPLOYEE PROFILE -->
+<!-- ======================================================= -->
+<div id="emp-profile" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">My Portal</div></div></div>
+    <div class="sidebar-section-label">Menu</div>
+    <div class="sidebar-item"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item"><span class="si-icon">📅</span> Daily Attendance</div>
+    <div class="sidebar-item"><span class="si-icon">📊</span> Monthly Report</div>
+    <div class="sidebar-item"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-section-label">Account</div>
+    <div class="sidebar-item active"><span class="si-icon">🙍</span> My Profile</div>
+    <div class="sidebar-item"><span class="si-icon">⚙️</span> Settings</div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar">JD</div><div class="sidebar-user-info"><div class="sidebar-user-name">John Doe</div><div class="sidebar-user-role">Employee</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">My Profile</div>
+      <button class="action-btn primary" style="margin-left:auto;">✏️ Edit Profile</button>
+      <div class="topbar-avatar">JD</div>
+    </div>
+    <div class="page-content">
+      <div class="grid-6-4">
+        <div class="card" style="overflow:hidden;">
+          <div class="profile-header">
+            <div style="color:rgba(255,255,255,0.7);font-size:12px;margin-bottom:4px;">Employee Profile</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;color:#fff;">John Doe</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.75);">Software Engineer · Engineering Department</div>
+            <div class="profile-avatar-wrap">JD</div>
+          </div>
+          <div class="profile-body">
+            <div class="section-title" style="margin-top:8px;">Personal Information</div>
+            <div class="info-row"><span class="info-key">Full Name</span><span class="info-val">John Doe</span></div>
+            <div class="info-row"><span class="info-key">Employee ID</span><span class="info-val">EMP-2024-0042</span></div>
+            <div class="info-row"><span class="info-key">Email</span><span class="info-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a9c3c6c1c787cdc6cce9cac6c4d9c8c7d087cac6c4">[email&#160;protected]</a></span></div>
+            <div class="info-row"><span class="info-key">Department</span><span class="info-val">Engineering</span></div>
+            <div class="info-row"><span class="info-key">Designation</span><span class="info-val">Software Engineer</span></div>
+            <div class="info-row"><span class="info-key">Joined</span><span class="info-val">March 15, 2025</span></div>
+            <div class="info-row"><span class="info-key">Auth Method</span><span class="info-val">🏢 LDAP (Organization)</span></div>
+            <div class="section-title" style="margin-top:20px;">Biometric Info</div>
+            <div class="info-row"><span class="info-key">Device ID</span><span class="info-val">BIO-DEV-004</span></div>
+            <div class="info-row"><span class="info-key">Fingerprint</span><span class="info-val"><span class="badge active">Registered ✓</span></span></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="card">
+            <div class="card-header"><div class="card-title">📊 Quick Stats</div></div>
+            <div class="card-body">
+              <div class="info-row"><span class="info-key">Attendance Rate</span><span class="info-val" style="color:var(--success);font-weight:700;">94%</span></div>
+              <div class="info-row"><span class="info-key">Avg Hours/Day</span><span class="info-val">8h 42m</span></div>
+              <div class="info-row"><span class="info-key">Punctuality</span><span class="info-val" style="color:var(--success);font-weight:700;">88%</span></div>
+              <div class="info-row"><span class="info-key">Total Working Days</span><span class="info-val">118 days</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">🔐 Security</div></div>
+            <div class="card-body">
+              <div class="info-row"><span class="info-key">Last Login</span><span class="info-val">Today 09:02 AM</span></div>
+              <div class="info-row"><span class="info-key">Login Method</span><span class="info-val">LDAP</span></div>
+              <div style="margin-top:14px;">
+                <div class="alert warning">⚠️ LDAP users must reset password through IT Admin</div>
+                <button class="action-btn ghost" style="width:100%;justify-content:center;">🔑 Request Password Reset</button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">📥 Quick Export</div></div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:8px;">
+              <button class="action-btn ghost" style="justify-content:center;">📄 Download This Month (PDF)</button>
+              <button class="action-btn ghost" style="justify-content:center;">📊 Download This Month (Excel)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 10: ADMIN DASHBOARD -->
+<!-- ======================================================= -->
+<div id="admin-dashboard" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">Admin Panel</div></div></div>
+    <div class="sidebar-section-label">Overview</div>
+    <div class="sidebar-item active"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item"><span class="si-icon">👥</span> All Employees</div>
+    <div class="sidebar-item"><span class="si-icon">📊</span> Departments</div>
+    <div class="sidebar-section-label">Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📤</span> Export Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-section-label">Management</div>
+    <div class="sidebar-item"><span class="si-icon">⚙️</span> User Management</div>
+    <div class="sidebar-item"><span class="si-icon">🔔</span> Alerts <span class="badge">3</span></div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div><div class="sidebar-user-info"><div class="sidebar-user-name">Admin User</div><div class="sidebar-user-role">HR Administrator</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Admin Dashboard <span class="topbar-subtitle">Monday, Feb 17 2026</span></div>
+      <div class="search-bar"><span class="search-icon">🔍</span><input placeholder="Search employee..."></div>
+      <div class="topbar-icon-btn">🔔<span class="dot"></span></div>
+      <div class="topbar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div>
+    </div>
+    <div class="page-content">
+      <!-- ADMIN STATS -->
+      <div class="stats-grid">
+        <div class="stat-card blue">
+          <div class="stat-icon blue">👥</div>
+          <div class="stat-label">Total Employees</div>
+          <div class="stat-value">124</div>
+          <span class="stat-badge up">↑ 3 this month</span>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon green">✅</div>
+          <div class="stat-label">Present Today</div>
+          <div class="stat-value">98</div>
+          <span class="stat-badge up">79% attendance</span>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-icon red">🚫</div>
+          <div class="stat-label">Absent Today</div>
+          <div class="stat-value">18</div>
+          <span class="stat-badge down">14.5%</span>
+        </div>
+        <div class="stat-card amber">
+          <div class="stat-icon amber">⚠️</div>
+          <div class="stat-label">Late Arrivals</div>
+          <div class="stat-value">8</div>
+          <span class="stat-badge down">↑ 2 vs yesterday</span>
+        </div>
+      </div>
+      <!-- MAIN GRID -->
+      <div class="grid-7-3">
+        <!-- RECENT CHECKINGS -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🟢 Live — Today's Attendance (Feb 17)</div>
+            <span class="card-link">View All →</span>
+          </div>
+          <div class="card-body" style="padding:0 20px 16px;">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Employee</th><th>Department</th><th>Check In</th><th>Check Out</th><th>Hours</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><div class="user-cell"><div class="user-ava" style="background:#3B6FE0;">JD</div><div><div class="user-name">John Doe</div><div class="user-email">EMP-0042</div></div></div></td>
+                    <td>Engineering</td><td>09:02</td><td>—</td><td>3h 42m</td><td><span class="badge present">Present</span></td>
+                  </tr>
+                  <tr>
+                    <td><div class="user-cell"><div class="user-ava" style="background:#22C55E;">AS</div><div><div class="user-name">Alice Smith</div><div class="user-email">EMP-0018</div></div></div></td>
+                    <td>HR</td><td>08:55</td><td>—</td><td>3h 50m</td><td><span class="badge present">Present</span></td>
+                  </tr>
+                  <tr>
+                    <td><div class="user-cell"><div class="user-ava" style="background:#F59E0B;">RK</div><div><div class="user-name">Raj Kumar</div><div class="user-email">EMP-0031</div></div></div></td>
+                    <td>Finance</td><td>09:18</td><td>—</td><td>3h 27m</td><td><span class="badge late">Late</span></td>
+                  </tr>
+                  <tr>
+                    <td><div class="user-cell"><div class="user-ava" style="background:#EF4444;">MP</div><div><div class="user-name">Maria Perez</div><div class="user-email">EMP-0055</div></div></div></td>
+                    <td>Marketing</td><td>—</td><td>—</td><td>—</td><td><span class="badge absent">Absent</span></td>
+                  </tr>
+                  <tr>
+                    <td><div class="user-cell"><div class="user-ava" style="background:#8B5CF6;">SC</div><div><div class="user-name">Sam Chen</div><div class="user-email">EMP-0067</div></div></div></td>
+                    <td>Engineering</td><td>08:58</td><td>—</td><td>3h 47m</td><td><span class="badge present">Present</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- DEPT BREAKDOWN -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="card">
+            <div class="card-header"><div class="card-title">🏢 Dept Attendance</div></div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>Engineering</span><span style="font-weight:600;color:var(--success);">92%</span></div>
+                  <div class="progress-bar"><div class="progress-fill green" style="width:92%"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>HR</span><span style="font-weight:600;color:var(--success);">88%</span></div>
+                  <div class="progress-bar"><div class="progress-fill" style="width:88%;background:#06B6D4;"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>Finance</span><span style="font-weight:600;color:var(--warning);">75%</span></div>
+                  <div class="progress-bar"><div class="progress-fill" style="width:75%;background:var(--warning);"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>Marketing</span><span style="font-weight:600;color:var(--danger);">68%</span></div>
+                  <div class="progress-bar"><div class="progress-fill" style="width:68%;background:var(--danger);"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>Operations</span><span style="font-weight:600;color:var(--success);">85%</span></div>
+                  <div class="progress-bar"><div class="progress-fill green" style="width:85%"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">⚡ Quick Actions</div></div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:8px;">
+              <button class="action-btn primary" style="justify-content:center;">📊 Export Today's Report</button>
+              <button class="action-btn ghost" style="justify-content:center;">📧 Email Absent Employees</button>
+              <button class="action-btn ghost" style="justify-content:center;">📈 View Department Report</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- MONTHLY TREND -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">📈 Organization Attendance Trend — Last 6 Months</div></div>
+        <div class="card-body">
+          <div class="bar-chart" style="height:120px;">
+            <div class="bar-group"><div class="bar green" style="height:82%;"></div><div class="bar-label">Sep</div></div>
+            <div class="bar-group"><div class="bar green" style="height:78%;"></div><div class="bar-label">Oct</div></div>
+            <div class="bar-group"><div class="bar green" style="height:88%;"></div><div class="bar-label">Nov</div></div>
+            <div class="bar-group"><div class="bar" style="height:65%;background:var(--warning);"></div><div class="bar-label">Dec</div></div>
+            <div class="bar-group"><div class="bar green" style="height:85%;"></div><div class="bar-label">Jan</div></div>
+            <div class="bar-group"><div class="bar" style="height:79%;"></div><div class="bar-label">Feb</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 11: ALL EMPLOYEES -->
+<!-- ======================================================= -->
+<div id="admin-employees" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">Admin Panel</div></div></div>
+    <div class="sidebar-section-label">Overview</div>
+    <div class="sidebar-item"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item active"><span class="si-icon">👥</span> All Employees</div>
+    <div class="sidebar-item"><span class="si-icon">📊</span> Departments</div>
+    <div class="sidebar-section-label">Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📤</span> Export Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-section-label">Management</div>
+    <div class="sidebar-item"><span class="si-icon">⚙️</span> User Management</div>
+    <div class="sidebar-item"><span class="si-icon">🔔</span> Alerts <span class="badge">3</span></div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div><div class="sidebar-user-info"><div class="sidebar-user-name">Admin User</div><div class="sidebar-user-role">HR Administrator</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">All Employees</div>
+      <div class="search-bar" style="margin-left:auto;width:280px;"><span class="search-icon">🔍</span><input placeholder="Search name, ID, email..."></div>
+      <button class="action-btn primary">📤 Export All</button>
+      <div class="topbar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div>
+    </div>
+    <div class="page-content">
+      <div class="filter-row">
+        <select class="filter-select"><option>All Departments</option><option>Engineering</option><option>HR</option><option>Finance</option></select>
+        <select class="filter-select"><option>All Status</option><option>Present</option><option>Absent</option><option>Late</option></select>
+        <select class="filter-select"><option>February 2026</option><option>January 2026</option></select>
+        <button class="filter-btn">Filter</button>
+        <div class="ml-auto" style="font-size:12.5px;color:var(--text-light);">Showing 124 employees</div>
+      </div>
+      <div class="card">
+        <div class="card-body" style="padding:0 0 16px;">
+          <div class="table-wrap" style="padding:0 16px;">
+            <table>
+              <thead><tr><th>Employee</th><th>Dept</th><th>Today Status</th><th>Check In</th><th>Check Out</th><th>Feb Attendance</th><th>Avg Hours</th><th>Account</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><div class="user-cell"><div class="user-ava" style="background:#3B6FE0;">JD</div><div><div class="user-name">John Doe</div><div class="user-email">EMP-0042</div></div></div></td>
+                  <td>Engineering</td><td><span class="badge present">Present</span></td><td>09:02</td><td>—</td>
+                  <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="width:60px;"><div class="progress-fill green" style="width:76%;"></div></div><span style="font-size:11px;">76%</span></div></td>
+                  <td>8h 42m</td><td><span class="badge active">Active</span></td>
+                  <td><button class="action-btn ghost" style="padding:4px 10px;font-size:11.5px;">View</button></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="user-ava" style="background:#22C55E;">AS</div><div><div class="user-name">Alice Smith</div><div class="user-email">EMP-0018</div></div></div></td>
+                  <td>HR</td><td><span class="badge present">Present</span></td><td>08:55</td><td>—</td>
+                  <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="width:60px;"><div class="progress-fill green" style="width:88%;"></div></div><span style="font-size:11px;">88%</span></div></td>
+                  <td>8h 55m</td><td><span class="badge active">Active</span></td>
+                  <td><button class="action-btn ghost" style="padding:4px 10px;font-size:11.5px;">View</button></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="user-ava" style="background:#F59E0B;">RK</div><div><div class="user-name">Raj Kumar</div><div class="user-email">EMP-0031</div></div></div></td>
+                  <td>Finance</td><td><span class="badge late">Late</span></td><td>09:18</td><td>—</td>
+                  <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="width:60px;"><div class="progress-fill" style="width:65%;background:var(--warning);"></div></div><span style="font-size:11px;">65%</span></div></td>
+                  <td>7h 30m</td><td><span class="badge active">Active</span></td>
+                  <td><button class="action-btn ghost" style="padding:4px 10px;font-size:11.5px;">View</button></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="user-ava" style="background:#EF4444;">MP</div><div><div class="user-name">Maria Perez</div><div class="user-email">EMP-0055</div></div></div></td>
+                  <td>Marketing</td><td><span class="badge absent">Absent</span></td><td>—</td><td>—</td>
+                  <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="width:60px;"><div class="progress-fill" style="width:55%;background:var(--danger);"></div></div><span style="font-size:11px;">55%</span></div></td>
+                  <td>6h 45m</td><td><span class="badge active">Active</span></td>
+                  <td><button class="action-btn ghost" style="padding:4px 10px;font-size:11.5px;">View</button></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="user-ava" style="background:#8B5CF6;">SC</div><div><div class="user-name">Sam Chen</div><div class="user-email">EMP-0067</div></div></div></td>
+                  <td>Engineering</td><td><span class="badge present">Present</span></td><td>08:58</td><td>—</td>
+                  <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="width:60px;"><div class="progress-fill green" style="width:94%;"></div></div><span style="font-size:11px;">94%</span></div></td>
+                  <td>9h 10m</td><td><span class="badge active">Active</span></td>
+                  <td><button class="action-btn ghost" style="padding:4px 10px;font-size:11.5px;">View</button></td>
+                </tr>
+                <tr>
+                  <td><div class="user-cell"><div class="user-ava" style="background:#06B6D4;">PL</div><div><div class="user-name">Priya Lakshmi</div><div class="user-email">EMP-0079</div></div></div></td>
+                  <td>Operations</td><td><span class="badge present">Present</span></td><td>09:00</td><td>—</td>
+                  <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="width:60px;"><div class="progress-fill green" style="width:82%;"></div></div><span style="font-size:11px;">82%</span></div></td>
+                  <td>8h 58m</td><td><span class="badge inactive">Inactive</span></td>
+                  <td><button class="action-btn ghost" style="padding:4px 10px;font-size:11.5px;">View</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- PAGINATION -->
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 20px 0;border-top:1px solid var(--border);margin-top:8px;">
+            <span style="font-size:12.5px;color:var(--text-light);">Showing 1-10 of 124 employees</span>
+            <div style="display:flex;gap:4px;">
+              <button class="action-btn ghost" style="padding:5px 10px;">‹ Prev</button>
+              <button class="action-btn primary" style="padding:5px 10px;">1</button>
+              <button class="action-btn ghost" style="padding:5px 10px;">2</button>
+              <button class="action-btn ghost" style="padding:5px 10px;">3</button>
+              <button class="action-btn ghost" style="padding:5px 10px;">Next ›</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 12: EMPLOYEE DETAIL (Admin View) -->
+<!-- ======================================================= -->
+<div id="admin-detail" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">Admin Panel</div></div></div>
+    <div class="sidebar-section-label">Overview</div>
+    <div class="sidebar-item"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item active"><span class="si-icon">👥</span> All Employees</div>
+    <div class="sidebar-item"><span class="si-icon">📊</span> Departments</div>
+    <div class="sidebar-section-label">Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📤</span> Export Reports</div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div><div class="sidebar-user-info"><div class="sidebar-user-name">Admin User</div><div class="sidebar-user-role">HR Administrator</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div style="font-size:13px;color:var(--text-light);">← All Employees /</div>
+      <div class="topbar-title" style="font-size:16px;margin-left:6px;">John Doe — EMP-0042</div>
+      <div class="ml-auto" style="display:flex;gap:8px;">
+        <button class="action-btn ghost">📄 Export PDF</button>
+        <button class="action-btn primary">📊 Export Excel</button>
+      </div>
+    </div>
+    <div class="page-content">
+      <!-- PROFILE BANNER -->
+      <div style="background:linear-gradient(135deg,var(--primary) 0%,#5B8BF0 100%);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px;">
+        <div class="sidebar-avatar" style="width:56px;height:56px;font-size:20px;font-weight:800;flex-shrink:0;">JD</div>
+        <div style="flex:1;">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;color:#fff;">John Doe</div>
+          <div style="font-size:12.5px;color:rgba(255,255,255,0.75);">Software Engineer · Engineering · EMP-0042</div>
+        </div>
+        <div class="today-chips">
+          <div class="today-chip"><span class="today-chip-label">Attendance Rate</span><span class="today-chip-val">94%</span></div>
+          <div class="today-chip"><span class="today-chip-label">Avg Hours</span><span class="today-chip-val">8h 42m</span></div>
+          <div class="today-chip"><span class="today-chip-label">Status</span><span class="today-chip-val">🟢 Present</span></div>
+        </div>
+      </div>
+      <!-- FILTER + TABLE -->
+      <div class="filter-row">
+        <select class="filter-select"><option>February 2026</option><option>January 2026</option></select>
+        <button class="filter-btn">Apply</button>
+        <div class="ml-auto">
+          <button class="action-btn ghost">📄 PDF</button>
+          &nbsp;
+          <button class="action-btn ghost">📊 Excel</button>
+        </div>
+      </div>
+      <div class="grid-6-4">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Attendance Detail — February 2026</div></div>
+          <div class="card-body" style="padding:0 20px 16px;">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Date</th><th>Day</th><th>Check In</th><th>Check Out</th><th>Hours</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td>Feb 2</td><td>Mon</td><td>08:58</td><td>18:01</td><td>9h 03m</td><td><span class="badge present">Present</span></td></tr>
+                  <tr><td>Feb 3</td><td>Tue</td><td>09:00</td><td>18:00</td><td>9h 00m</td><td><span class="badge present">Present</span></td></tr>
+                  <tr><td>Feb 6</td><td>Fri</td><td>09:10</td><td>18:10</td><td>9h 00m</td><td><span class="badge late">Late</span></td></tr>
+                  <tr><td>Feb 10</td><td>Tue</td><td>09:20</td><td>18:15</td><td>8h 55m</td><td><span class="badge late">Late</span></td></tr>
+                  <tr><td>Feb 16</td><td>Mon</td><td>—</td><td>—</td><td>—</td><td><span class="badge absent">Absent</span></td></tr>
+                  <tr><td>Feb 17</td><td>Tue</td><td>09:02</td><td>—</td><td>ongoing</td><td><span class="badge present">Present</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="card">
+            <div class="card-header"><div class="card-title">📊 Feb Summary</div></div>
+            <div class="card-body">
+              <div class="info-row"><span class="info-key">Present Days</span><span class="info-val" style="color:var(--success);font-weight:700;">13 days</span></div>
+              <div class="info-row"><span class="info-key">Absent Days</span><span class="info-val" style="color:var(--danger);">1 day</span></div>
+              <div class="info-row"><span class="info-key">Late Arrivals</span><span class="info-val" style="color:var(--warning);">2 days</span></div>
+              <div class="info-row"><span class="info-key">Total Hours</span><span class="info-val">112h 20m</span></div>
+              <div class="info-row"><span class="info-key">Avg/Day</span><span class="info-val">8h 42m</span></div>
+              <div class="info-row"><span class="info-key">Punctuality</span><span class="info-val">88%</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">⚙️ Admin Actions</div></div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:8px;">
+              <button class="action-btn ghost" style="justify-content:center;">✉️ Send Email</button>
+              <button class="action-btn ghost" style="justify-content:center;">🚫 Deactivate Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 13: REPORTS & EXPORT -->
+<!-- ======================================================= -->
+<div id="admin-reports" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">Admin Panel</div></div></div>
+    <div class="sidebar-section-label">Overview</div>
+    <div class="sidebar-item"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item"><span class="si-icon">👥</span> All Employees</div>
+    <div class="sidebar-item"><span class="si-icon">📊</span> Departments</div>
+    <div class="sidebar-section-label">Reports</div>
+    <div class="sidebar-item active"><span class="si-icon">📤</span> Export Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div><div class="sidebar-user-info"><div class="sidebar-user-name">Admin User</div><div class="sidebar-user-role">HR Administrator</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Reports & Export</div>
+      <div class="topbar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);margin-left:auto;">AD</div>
+    </div>
+    <div class="page-content">
+      <div class="grid-2" style="margin-bottom:0;">
+        <!-- QUICK EXPORT -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">⚡ Quick Export</div></div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div style="padding:14px;background:var(--bg);border-radius:var(--radius-sm);border:1.5px solid var(--border);display:flex;align-items:center;gap:14px;">
+                <span style="font-size:28px;">📊</span>
+                <div style="flex:1;">
+                  <div style="font-size:13.5px;font-weight:600;color:var(--text-dark);">All Employees — This Month</div>
+                  <div style="font-size:12px;color:var(--text-light);">February 2026 · 124 employees</div>
+                </div>
+                <div style="display:flex;gap:6px;">
+                  <button class="action-btn primary" style="font-size:11.5px;">Excel</button>
+                  <button class="action-btn ghost" style="font-size:11.5px;">PDF</button>
+                  <button class="action-btn ghost" style="font-size:11.5px;">CSV</button>
+                </div>
+              </div>
+              <div style="padding:14px;background:var(--bg);border-radius:var(--radius-sm);border:1.5px solid var(--border);display:flex;align-items:center;gap:14px;">
+                <span style="font-size:28px;">🏢</span>
+                <div style="flex:1;">
+                  <div style="font-size:13.5px;font-weight:600;color:var(--text-dark);">Department-wise Report</div>
+                  <div style="font-size:12px;color:var(--text-light);">February 2026 · All Departments</div>
+                </div>
+                <div style="display:flex;gap:6px;">
+                  <button class="action-btn primary" style="font-size:11.5px;">Excel</button>
+                  <button class="action-btn ghost" style="font-size:11.5px;">PDF</button>
+                </div>
+              </div>
+              <div style="padding:14px;background:var(--bg);border-radius:var(--radius-sm);border:1.5px solid var(--border);display:flex;align-items:center;gap:14px;">
+                <span style="font-size:28px;">📅</span>
+                <div style="flex:1;">
+                  <div style="font-size:13.5px;font-weight:600;color:var(--text-dark);">Today's Attendance</div>
+                  <div style="font-size:12px;color:var(--text-light);">Feb 17, 2026 · Real-time</div>
+                </div>
+                <div style="display:flex;gap:6px;">
+                  <button class="action-btn primary" style="font-size:11.5px;">Excel</button>
+                  <button class="action-btn ghost" style="font-size:11.5px;">PDF</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- CUSTOM REPORT -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">🎛️ Custom Report Builder</div></div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Select Department</label>
+                <select class="form-input"><option>All Departments</option><option>Engineering</option><option>HR</option><option>Finance</option></select>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Date Range</label>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                  <input class="form-input filled" value="01 Feb 2026" readonly>
+                  <input class="form-input filled" value="17 Feb 2026" readonly>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Export Format</label>
+                <div style="display:flex;gap:8px;">
+                  <button class="filter-btn">📊 Excel</button>
+                  <button class="filter-btn-outline">📄 PDF</button>
+                  <button class="filter-btn-outline">📋 CSV</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Include</label>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <label style="display:flex;align-items:center;gap:8px;font-size:13px;"><input type="checkbox" checked> Login / Logout Times</label>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:13px;"><input type="checkbox" checked> Working Hours</label>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:13px;"><input type="checkbox" checked> Monthly Summary</label>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:13px;"><input type="checkbox"> Analytics Charts</label>
+                </div>
+              </div>
+              <button class="btn-primary" style="margin-top:4px;">Generate Report →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- RECENT EXPORTS -->
+      <div class="card" style="margin-top:16px;">
+        <div class="card-header"><div class="card-title">🕓 Recent Exports</div></div>
+        <div class="card-body" style="padding:0 20px 16px;">
+          <table>
+            <thead><tr><th>Report Name</th><th>Type</th><th>Generated By</th><th>Date</th><th>Format</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>All Employees — Jan 2026</td><td>Monthly</td><td>Admin User</td><td>Feb 1, 09:10</td><td><span class="badge active">Excel</span></td><td><button class="action-btn ghost" style="padding:4px 10px;font-size:11px;">⬇ Download</button></td></tr>
+              <tr><td>Engineering Dept — Q4 2025</td><td>Quarterly</td><td>Admin User</td><td>Jan 5, 14:22</td><td><span class="badge" style="background:var(--danger-light);color:var(--danger);">PDF</span></td><td><button class="action-btn ghost" style="padding:4px 10px;font-size:11px;">⬇ Download</button></td></tr>
+              <tr><td>All Employees — Dec 2025</td><td>Monthly</td><td>Admin User</td><td>Jan 2, 11:05</td><td><span class="badge" style="background:var(--info-light);color:var(--info);">CSV</span></td><td><button class="action-btn ghost" style="padding:4px 10px;font-size:11px;">⬇ Download</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ======================================================= -->
+<!-- PAGE: EMPLOYEE SETTINGS -->
+<!-- ======================================================= -->
+<div id="emp-settings" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">My Portal</div></div></div>
+    <div class="sidebar-section-label">Menu</div>
+    <div class="sidebar-item"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item"><span class="si-icon">📅</span> Daily Attendance</div>
+    <div class="sidebar-item"><span class="si-icon">📊</span> Monthly Report</div>
+    <div class="sidebar-item"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-section-label">Account</div>
+    <div class="sidebar-item"><span class="si-icon">🙍</span> My Profile</div>
+    <div class="sidebar-item active"><span class="si-icon">⚙️</span> Settings</div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar">JD</div><div class="sidebar-user-info"><div class="sidebar-user-name">John Doe</div><div class="sidebar-user-role">Employee · Engineering</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Settings</div>
+      <div class="topbar-icon-btn" style="margin-left:auto;">🔔</div>
+      <div class="topbar-avatar">JD</div>
+    </div>
+    <div class="page-content">
+      <!-- Settings Tab Row -->
+      <div class="tab-row" style="width:fit-content;margin-bottom:20px;">
+        <button class="tab-btn active" style="padding:9px 20px;">🔐 Password</button>
+        <button class="tab-btn" style="padding:9px 20px;">🔔 Notifications</button>
+        <button class="tab-btn" style="padding:9px 20px;">🌐 Preferences</button>
+      </div>
+
+      <div class="grid-6-4">
+        <!-- LEFT: Password Change -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <!-- Change Password Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">🔐 Change Password</div>
+            </div>
+            <div class="card-body">
+              <div class="alert warning">⚠️ For security, you'll be logged out after changing your password.</div>
+              <div class="form-group">
+                <label class="form-label">Current Password</label>
+                <input class="form-input" type="password" placeholder="Enter current password">
+              </div>
+              <div class="form-group">
+                <label class="form-label">New Password</label>
+                <input class="form-input" type="password" placeholder="Min 8 chars, 1 uppercase, 1 number">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm New Password</label>
+                <input class="form-input" type="password" placeholder="Re-enter new password">
+              </div>
+              <!-- Password Strength -->
+              <div style="margin-bottom:16px;">
+                <div style="font-size:12px;color:var(--text-light);margin-bottom:6px;">Password Strength</div>
+                <div style="display:flex;gap:4px;">
+                  <div style="flex:1;height:4px;border-radius:99px;background:var(--success);"></div>
+                  <div style="flex:1;height:4px;border-radius:99px;background:var(--success);"></div>
+                  <div style="flex:1;height:4px;border-radius:99px;background:var(--warning);"></div>
+                  <div style="flex:1;height:4px;border-radius:99px;background:var(--border);"></div>
+                </div>
+                <div style="font-size:11px;color:var(--warning);margin-top:4px;">Medium — Add a special character to make it stronger</div>
+              </div>
+              <!-- Requirements -->
+              <div style="background:var(--bg);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:16px;">
+                <div style="font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:8px;">Password Requirements</div>
+                <div style="display:flex;flex-direction:column;gap:5px;">
+                  <div style="font-size:12px;color:var(--success);">✅ At least 8 characters</div>
+                  <div style="font-size:12px;color:var(--success);">✅ One uppercase letter</div>
+                  <div style="font-size:12px;color:var(--success);">✅ One number</div>
+                  <div style="font-size:12px;color:var(--text-light);">⬜ One special character (!@#$)</div>
+                </div>
+              </div>
+              <button class="btn-primary">Update Password</button>
+            </div>
+          </div>
+
+          <!-- Sessions Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">📱 Active Sessions</div>
+              <span class="card-link" style="color:var(--danger);">Logout All</span>
+            </div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--primary-light);border-radius:var(--radius-sm);border:1px solid rgba(59,111,224,0.2);">
+                  <span style="font-size:22px;">💻</span>
+                  <div style="flex:1;">
+                    <div style="font-size:13px;font-weight:600;">Chrome — Windows</div>
+                    <div style="font-size:11.5px;color:var(--text-light);">192.168.1.42 · Active now</div>
+                  </div>
+                  <span class="badge present">Current</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:var(--radius-sm);">
+                  <span style="font-size:22px;">📱</span>
+                  <div style="flex:1;">
+                    <div style="font-size:13px;font-weight:600;">Safari — iPhone</div>
+                    <div style="font-size:11.5px;color:var(--text-light);">Last active: Feb 15, 2026</div>
+                  </div>
+                  <button class="action-btn ghost" style="font-size:11.5px;padding:4px 10px;color:var(--danger);border-color:var(--danger);">Revoke</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Notifications + Preferences -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <!-- Notifications Card -->
+          <div class="card">
+            <div class="card-header"><div class="card-title">🔔 Notification Preferences</div></div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:0;">
+                <div class="info-row" style="justify-content:space-between;">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;">Attendance Summary</div>
+                    <div style="font-size:11.5px;color:var(--text-light);">Daily email at 6 PM</div>
+                  </div>
+                  <div style="width:40px;height:22px;background:var(--primary);border-radius:99px;position:relative;cursor:pointer;"><div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;right:2px;top:2px;box-shadow:0 1px 4px rgba(0,0,0,0.2);"></div></div>
+                </div>
+                <div class="info-row" style="justify-content:space-between;">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;">Monthly Report Ready</div>
+                    <div style="font-size:11.5px;color:var(--text-light);">Email when report is available</div>
+                  </div>
+                  <div style="width:40px;height:22px;background:var(--primary);border-radius:99px;position:relative;cursor:pointer;"><div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;right:2px;top:2px;"></div></div>
+                </div>
+                <div class="info-row" style="justify-content:space-between;">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;">Late Arrival Alert</div>
+                    <div style="font-size:11.5px;color:var(--text-light);">Notify if marked late</div>
+                  </div>
+                  <div style="width:40px;height:22px;background:var(--border);border-radius:99px;position:relative;cursor:pointer;"><div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;left:2px;top:2px;"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preferences Card -->
+          <div class="card">
+            <div class="card-header"><div class="card-title">🌐 Preferences</div></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="form-label">Time Zone</label>
+                <select class="form-input"><option>Asia/Kolkata (IST +5:30)</option><option>UTC+0</option></select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date Format</label>
+                <select class="form-input"><option>DD MMM YYYY (17 Feb 2026)</option><option>MM/DD/YYYY</option></select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Language</label>
+                <select class="form-input"><option>English (US)</option><option>Tamil</option></select>
+              </div>
+              <button class="btn-primary">Save Preferences</button>
+            </div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="card" style="border:1.5px solid var(--danger-light);">
+            <div class="card-header"><div class="card-title" style="color:var(--danger);">⚠️ Danger Zone</div></div>
+            <div class="card-body">
+              <div style="font-size:12.5px;color:var(--text-light);margin-bottom:12px;">These actions are irreversible. Please be careful.</div>
+              <button class="action-btn ghost" style="width:100%;justify-content:center;color:var(--danger);border-color:var(--danger);">🗑️ Delete My Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE: ADMIN DEPARTMENTS -->
+<!-- ======================================================= -->
+<div id="admin-departments" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">Admin Panel</div></div></div>
+    <div class="sidebar-section-label">Overview</div>
+    <div class="sidebar-item"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item"><span class="si-icon">👥</span> All Employees</div>
+    <div class="sidebar-item active"><span class="si-icon">📊</span> Departments</div>
+    <div class="sidebar-section-label">Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📤</span> Export Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-section-label">Management</div>
+    <div class="sidebar-item"><span class="si-icon">⚙️</span> User Management</div>
+    <div class="sidebar-item"><span class="si-icon">🔔</span> Alerts <span class="badge">3</span></div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div><div class="sidebar-user-info"><div class="sidebar-user-name">Admin User</div><div class="sidebar-user-role">HR Administrator</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Department Reports</div>
+      <select class="filter-select" style="margin-left:auto;"><option>February 2026</option><option>January 2026</option></select>
+      <button class="action-btn primary">📤 Export All</button>
+      <div class="topbar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div>
+    </div>
+    <div class="page-content">
+
+      <!-- Dept Stat Cards -->
+      <div class="stats-grid" style="grid-template-columns:repeat(5,1fr);">
+        <div class="stat-card blue" style="padding:16px;gap:6px;"><div class="stat-label" style="font-size:11px;">Total Depts</div><div class="stat-value" style="font-size:26px;">5</div></div>
+        <div class="stat-card green" style="padding:16px;gap:6px;"><div class="stat-label" style="font-size:11px;">Best Dept</div><div class="stat-value" style="font-size:14px;color:var(--success);">Engineering<br><span style="font-size:11px;">92%</span></div></div>
+        <div class="stat-card red" style="padding:16px;gap:6px;"><div class="stat-label" style="font-size:11px;">Needs Attention</div><div class="stat-value" style="font-size:14px;color:var(--danger);">Marketing<br><span style="font-size:11px;">68%</span></div></div>
+        <div class="stat-card amber" style="padding:16px;gap:6px;"><div class="stat-label" style="font-size:11px;">Org Average</div><div class="stat-value" style="font-size:26px;">82%</div></div>
+        <div class="stat-card blue" style="padding:16px;gap:6px;"><div class="stat-label" style="font-size:11px;">Total Employees</div><div class="stat-value" style="font-size:26px;">124</div></div>
+      </div>
+
+      <!-- Dept Cards Grid -->
+      <div class="grid-3" style="margin-top:4px;">
+
+        <!-- Engineering -->
+        <div class="card">
+          <div class="card-header">
+            <div style="width:36px;height:36px;border-radius:9px;background:#EEF3FF;display:flex;align-items:center;justify-content:center;font-size:18px;">💻</div>
+            <div style="flex:1;margin-left:8px;">
+              <div class="card-title">Engineering</div>
+              <div style="font-size:11.5px;color:var(--text-light);">38 employees</div>
+            </div>
+            <span class="badge present">92%</span>
+          </div>
+          <div class="card-body">
+            <div class="progress-bar" style="height:6px;margin-bottom:14px;"><div class="progress-fill green" style="width:92%"></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div style="background:var(--success-light);padding:10px;border-radius:var(--radius-sm);text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--success);">35</div><div style="font-size:11px;color:#16a34a;">Present</div></div>
+              <div style="background:var(--danger-light);padding:10px;border-radius:var(--radius-sm);text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--danger);">3</div><div style="font-size:11px;color:var(--danger);">Absent</div></div>
+            </div>
+            <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+              <div class="info-row" style="padding:4px 0;"><span class="info-key" style="font-size:11.5px;">Avg Hours</span><span class="info-val" style="font-size:12px;">8h 55m</span></div>
+              <div class="info-row" style="padding:4px 0;"><span class="info-key" style="font-size:11.5px;">Late Arrivals</span><span class="info-val" style="font-size:12px;color:var(--warning);">4</span></div>
+              <div class="info-row" style="padding:4px 0;border:none;"><span class="info-key" style="font-size:11.5px;">On-time Rate</span><span class="info-val" style="font-size:12px;color:var(--success);">89%</span></div>
+            </div>
+            <button class="action-btn ghost" style="width:100%;justify-content:center;margin-top:10px;font-size:12px;">View Details →</button>
+          </div>
+        </div>
+
+        <!-- HR -->
+        <div class="card">
+          <div class="card-header">
+            <div style="width:36px;height:36px;border-radius:9px;background:#DCFCE7;display:flex;align-items:center;justify-content:center;font-size:18px;">👥</div>
+            <div style="flex:1;margin-left:8px;">
+              <div class="card-title">Human Resources</div>
+              <div style="font-size:11.5px;color:var(--text-light);">18 employees</div>
+            </div>
+            <span class="badge present">88%</span>
+          </div>
+          <div class="card-body">
+            <div class="progress-bar" style="height:6px;margin-bottom:14px;"><div class="progress-fill green" style="width:88%"></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div style="background:var(--success-light);padding:10px;border-radius:var(--radius-sm);text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--success);">16</div><div style="font-size:11px;color:#16a34a;">Present</div></div>
+              <div style="background:var(--danger-light);padding:10px;border-radius:var(--radius-sm);text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--danger);">2</div><div style="font-size:11px;color:var(--danger);">Absent</div></div>
+            </div>
+            <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+              <div class="info-row" style="padding:4px 0;"><span class="info-key" style="font-size:11.5px;">Avg Hours</span><span class="info-val" style="font-size:12px;">8h 30m</span></div>
+              <div class="info-row" style="padding:4px 0;"><span class="info-key" style="font-size:11.5px;">Late Arrivals</span><span class="info-val" style="font-size:12px;color:var(--warning);">2</span></div>
+              <div class="info-row" style="padding:4px 0;border:none;"><span class="info-key" style="font-size:11.5px;">On-time Rate</span><span class="info-val" style="font-size:12px;color:var(--success);">91%</span></div>
+            </div>
+            <button class="action-btn ghost" style="width:100%;justify-content:center;margin-top:10px;font-size:12px;">View Details →</button>
+          </div>
+        </div>
+
+        <!-- Finance -->
+        <div class="card">
+          <div class="card-header">
+            <div style="width:36px;height:36px;border-radius:9px;background:#FEF3C7;display:flex;align-items:center;justify-content:center;font-size:18px;">💰</div>
+            <div style="flex:1;margin-left:8px;">
+              <div class="card-title">Finance</div>
+              <div style="font-size:11.5px;color:var(--text-light);">22 employees</div>
+            </div>
+            <span class="badge late">75%</span>
+          </div>
+          <div class="card-body">
+            <div class="progress-bar" style="height:6px;margin-bottom:14px;"><div class="progress-fill" style="width:75%;background:var(--warning);"></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div style="background:var(--success-light);padding:10px;border-radius:var(--radius-sm);text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--success);">17</div><div style="font-size:11px;color:#16a34a;">Present</div></div>
+              <div style="background:var(--danger-light);padding:10px;border-radius:var(--radius-sm);text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--danger);">5</div><div style="font-size:11px;color:var(--danger);">Absent</div></div>
+            </div>
+            <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+              <div class="info-row" style="padding:4px 0;"><span class="info-key" style="font-size:11.5px;">Avg Hours</span><span class="info-val" style="font-size:12px;">7h 45m</span></div>
+              <div class="info-row" style="padding:4px 0;"><span class="info-key" style="font-size:11.5px;">Late Arrivals</span><span class="info-val" style="font-size:12px;color:var(--danger);">8</span></div>
+              <div class="info-row" style="padding:4px 0;border:none;"><span class="info-key" style="font-size:11.5px;">On-time Rate</span><span class="info-val" style="font-size:12px;color:var(--warning);">68%</span></div>
+            </div>
+            <button class="action-btn ghost" style="width:100%;justify-content:center;margin-top:10px;font-size:12px;">View Details →</button>
+          </div>
+        </div>
+
+        <!-- Marketing -->
+        <div class="card">
+          <div class="card-header">
+            <div style="width:36px;height:36px;border-radius:9px;background:#FEE2E2;display:flex;align-items:center;justify-content:center;font-size:18px;">📣</div>
+            <div style="flex:1;margin-left:8px;">
+              <div class="card-title">Marketing</div>
+              <div style="font-size:11.5px;color:var(--text-light);">26 employees</div>
+            </div>
+            <span class="badge absent">68%</span>
+          </div>
+          <div class="card-body">
+            <div class="progress-bar" style="height:6px;margin-bottom:14px;"><div class="progress-fill" style="width:68%;background:var(--danger);"></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div style="background:var(--success-light);padding:10px;border-radius:var(--radius-sm);text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--success);">18</div><div style="font-size:11px;color:#16a34a;">Present</div></div>
+              <div style="background:var(--danger-light);padding:10px;border-radius:var(--radius-sm);text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--danger);">8</div><div style="font-size:11px;color:var(--danger);">Absent</div></div>
+            </div>
+            <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+              <div class="info-row" style="padding:4px 0;"><span class="info-key" style="font-size:11.5px;">Avg Hours</span><span class="info-val" style="font-size:12px;">7h 10m</span></div>
+              <div class="info-row" style="padding:4px 0;"><span class="info-key" style="font-size:11.5px;">Late Arrivals</span><span class="info-val" style="font-size:12px;color:var(--danger);">11</span></div>
+              <div class="info-row" style="padding:4px 0;border:none;"><span class="info-key" style="font-size:11.5px;">On-time Rate</span><span class="info-val" style="font-size:12px;color:var(--danger);">58%</span></div>
+            </div>
+            <div class="alert warning" style="margin-top:10px;margin-bottom:0;">⚠️ Below 70% threshold — Review needed</div>
+          </div>
+        </div>
+
+        <!-- Operations -->
+        <div class="card">
+          <div class="card-header">
+            <div style="width:36px;height:36px;border-radius:9px;background:#CFFAFE;display:flex;align-items:center;justify-content:center;font-size:18px;">⚙️</div>
+            <div style="flex:1;margin-left:8px;">
+              <div class="card-title">Operations</div>
+              <div style="font-size:11.5px;color:var(--text-light);">20 employees</div>
+            </div>
+            <span class="badge present">85%</span>
+          </div>
+          <div class="card-body">
+            <div class="progress-bar" style="height:6px;margin-bottom:14px;"><div class="progress-fill green" style="width:85%"></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div style="background:var(--success-light);padding:10px;border-radius:var(--radius-sm);text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--success);">17</div><div style="font-size:11px;color:#16a34a;">Present</div></div>
+              <div style="background:var(--danger-light);padding:10px;border-radius:var(--radius-sm);text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--danger);">3</div><div style="font-size:11px;color:var(--danger);">Absent</div></div>
+            </div>
+            <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+              <div class="info-row" style="padding:4px 0;"><span class="info-key" style="font-size:11.5px;">Avg Hours</span><span class="info-val" style="font-size:12px;">8h 20m</span></div>
+              <div class="info-row" style="padding:4px 0;"><span class="info-key" style="font-size:11.5px;">Late Arrivals</span><span class="info-val" style="font-size:12px;color:var(--warning);">3</span></div>
+              <div class="info-row" style="padding:4px 0;border:none;"><span class="info-key" style="font-size:11.5px;">On-time Rate</span><span class="info-val" style="font-size:12px;color:var(--success);">84%</span></div>
+            </div>
+            <button class="action-btn ghost" style="width:100%;justify-content:center;margin-top:10px;font-size:12px;">View Details →</button>
+          </div>
+        </div>
+
+        <!-- Comparison Card -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">📊 Dept Comparison</div></div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;"><span>💻 Engineering</span><span style="font-weight:700;color:var(--success);">92%</span></div><div class="progress-bar"><div class="progress-fill green" style="width:92%;"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;"><span>👥 HR</span><span style="font-weight:700;color:var(--success);">88%</span></div><div class="progress-bar"><div class="progress-fill green" style="width:88%;"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;"><span>⚙️ Operations</span><span style="font-weight:700;color:var(--success);">85%</span></div><div class="progress-bar"><div class="progress-fill green" style="width:85%;"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;"><span>💰 Finance</span><span style="font-weight:700;color:var(--warning);">75%</span></div><div class="progress-bar"><div class="progress-fill" style="width:75%;background:var(--warning);"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;"><span>📣 Marketing</span><span style="font-weight:700;color:var(--danger);">68%</span></div><div class="progress-bar"><div class="progress-fill" style="width:68%;background:var(--danger);"></div></div></div>
+              <div style="padding-top:10px;border-top:1px solid var(--border);">
+                <div style="display:flex;justify-content:space-between;font-size:12.5px;"><span style="font-weight:600;">Org Average</span><span style="font-weight:700;color:var(--primary);">82%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE: ADMIN ANALYTICS -->
+<!-- ======================================================= -->
+<div id="admin-analytics" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">Admin Panel</div></div></div>
+    <div class="sidebar-section-label">Overview</div>
+    <div class="sidebar-item"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item"><span class="si-icon">👥</span> All Employees</div>
+    <div class="sidebar-item"><span class="si-icon">📊</span> Departments</div>
+    <div class="sidebar-section-label">Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📤</span> Export Reports</div>
+    <div class="sidebar-item active"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-section-label">Management</div>
+    <div class="sidebar-item"><span class="si-icon">⚙️</span> User Management</div>
+    <div class="sidebar-item"><span class="si-icon">🔔</span> Alerts <span class="badge">3</span></div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div><div class="sidebar-user-info"><div class="sidebar-user-name">Admin User</div><div class="sidebar-user-role">HR Administrator</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Organization Analytics</div>
+      <select class="filter-select" style="margin-left:auto;"><option>Last 6 Months</option><option>Last 3 Months</option><option>This Year</option></select>
+      <button class="action-btn primary">📤 Export Report</button>
+      <div class="topbar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div>
+    </div>
+    <div class="page-content">
+      <!-- KPI Row -->
+      <div class="stats-grid">
+        <div class="stat-card blue"><div class="stat-icon blue">📊</div><div class="stat-label">Org Attendance Rate</div><div class="stat-value">82%</div><span class="stat-badge up">↑ 4% vs last period</span></div>
+        <div class="stat-card green"><div class="stat-icon green">⏱</div><div class="stat-label">Avg Daily Hours (Org)</div><div class="stat-value">8.3h</div><span class="stat-badge up">↑ 0.2h</span></div>
+        <div class="stat-card amber"><div class="stat-icon amber">⏰</div><div class="stat-label">Late Arrival Rate</div><div class="stat-value">9.2%</div><span class="stat-badge down">↑ 1.1%</span></div>
+        <div class="stat-card red"><div class="stat-icon red">🚫</div><div class="stat-label">Absenteeism Rate</div><div class="stat-value">6.4%</div><span class="stat-badge up">↓ 0.8%</span></div>
+      </div>
+
+      <!-- Chart Row 1 -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📈 Monthly Attendance Trend (Org-wide)</div>
+          </div>
+          <div class="card-body">
+            <div class="bar-chart" style="height:160px;">
+              <div class="bar-group"><div class="bar green" style="height:78%;"></div><div class="bar-label">Sep</div></div>
+              <div class="bar-group"><div class="bar green" style="height:82%;"></div><div class="bar-label">Oct</div></div>
+              <div class="bar-group"><div class="bar green" style="height:88%;"></div><div class="bar-label">Nov</div></div>
+              <div class="bar-group"><div class="bar" style="height:65%;background:var(--warning);"></div><div class="bar-label">Dec</div></div>
+              <div class="bar-group"><div class="bar green" style="height:84%;"></div><div class="bar-label">Jan</div></div>
+              <div class="bar-group"><div class="bar" style="height:82%;"></div><div class="bar-label">Feb</div></div>
+            </div>
+            <div style="display:flex;gap:16px;font-size:11.5px;color:var(--text-light);margin-top:6px;">
+              <span style="display:flex;align-items:center;gap:4px;"><div style="width:10px;height:10px;background:var(--success);border-radius:2px;"></div> ≥80% (Good)</span>
+              <span style="display:flex;align-items:center;gap:4px;"><div style="width:10px;height:10px;background:var(--warning);border-radius:2px;"></div> &lt;80% (Below target)</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🍩 Attendance Distribution</div></div>
+          <div class="card-body">
+            <div class="donut-wrap">
+              <div style="position:relative;flex-shrink:0;">
+                <div class="donut" style="width:130px;height:130px;"></div>
+                <div class="donut-center" style="font-size:18px;font-weight:800;">82%</div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:var(--text-light);margin-bottom:12px;">6-MONTH BREAKDOWN · 124 EMPLOYEES</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--success)"></div><span>Present — <strong>82%</strong> (avg)</span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--danger)"></div><span>Absent — <strong>8%</strong></span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--warning)"></div><span>Late Arrivals — <strong>10%</strong></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Late + Absent Top Employees -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">⚠️ Highest Absenteeism (This Month)</div><span class="card-link">See All →</span></div>
+          <div class="card-body" style="padding:0 20px 16px;">
+            <table>
+              <thead><tr><th>Employee</th><th>Dept</th><th>Absent Days</th><th>Rate</th></tr></thead>
+              <tbody>
+                <tr><td><div class="user-cell"><div class="user-ava" style="background:#EF4444;">MP</div><div class="user-name">Maria Perez</div></div></td><td>Marketing</td><td style="color:var(--danger);font-weight:700;">8</td><td><span class="badge absent">47%</span></td></tr>
+                <tr><td><div class="user-cell"><div class="user-ava" style="background:#F59E0B;">RK</div><div class="user-name">Raj Kumar</div></div></td><td>Finance</td><td style="color:var(--danger);font-weight:700;">6</td><td><span class="badge absent">35%</span></td></tr>
+                <tr><td><div class="user-cell"><div class="user-ava" style="background:#8B5CF6;">TN</div><div class="user-name">Tom Nelson</div></div></td><td>Marketing</td><td style="color:var(--warning);font-weight:700;">5</td><td><span class="badge late">29%</span></td></tr>
+                <tr><td><div class="user-cell"><div class="user-ava" style="background:#06B6D4;">AK</div><div class="user-name">Anita Kumar</div></div></td><td>Finance</td><td style="color:var(--warning);font-weight:700;">4</td><td><span class="badge late">24%</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🏆 Top Punctual Employees</div><span class="card-link">See All →</span></div>
+          <div class="card-body" style="padding:0 20px 16px;">
+            <table>
+              <thead><tr><th>Employee</th><th>Dept</th><th>On-time</th><th>Rate</th></tr></thead>
+              <tbody>
+                <tr><td><div class="user-cell"><div class="user-ava" style="background:#22C55E;">SC</div><div class="user-name">Sam Chen</div></div></td><td>Engineering</td><td style="color:var(--success);font-weight:700;">17/17</td><td><span class="badge present">100%</span></td></tr>
+                <tr><td><div class="user-cell"><div class="user-ava" style="background:#3B6FE0;">AS</div><div class="user-name">Alice Smith</div></div></td><td>HR</td><td style="color:var(--success);font-weight:700;">16/17</td><td><span class="badge present">94%</span></td></tr>
+                <tr><td><div class="user-cell"><div class="user-ava" style="background:#F59E0B;">PL</div><div class="user-name">Priya Lakshmi</div></div></td><td>Operations</td><td style="color:var(--success);font-weight:700;">15/17</td><td><span class="badge present">88%</span></td></tr>
+                <tr><td><div class="user-cell"><div class="user-ava" style="background:#8B5CF6;">JD</div><div class="user-name">John Doe</div></div></td><td>Engineering</td><td style="color:var(--success);font-weight:700;">15/17</td><td><span class="badge present">88%</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weekly Heatmap -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">🗓️ Weekly Attendance Heatmap — February 2026</div></div>
+        <div class="card-body">
+          <div style="overflow-x:auto;">
+            <table style="min-width:600px;">
+              <thead><tr>
+                <th>Week</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Avg</th>
+              </tr></thead>
+              <tbody>
+                <tr><td style="font-weight:600;font-size:12px;">Week 1 (Feb 2-6)</td>
+                  <td><div style="background:#DCFCE7;color:#16a34a;padding:6px 10px;border-radius:6px;text-align:center;font-size:12px;font-weight:700;">91%</div></td>
+                  <td><div style="background:#DCFCE7;color:#16a34a;padding:6px 10px;border-radius:6px;text-align:center;font-size:12px;font-weight:700;">89%</div></td>
+                  <td><div style="background:#DCFCE7;color:#16a34a;padding:6px 10px;border-radius:6px;text-align:center;font-size:12px;font-weight:700;">87%</div></td>
+                  <td><div style="background:#DCFCE7;color:#16a34a;padding:6px 10px;border-radius:6px;text-align:center;font-size:12px;font-weight:700;">90%</div></td>
+                  <td><div style="background:#FEF3C7;color:#d97706;padding:6px 10px;border-radius:6px;text-align:center;font-size:12px;font-weight:700;">78%</div></td>
+                  <td style="font-weight:700;color:var(--success);">87%</td>
+                </tr>
+                <tr><td style="font-weight:600;font-size:12px;">Week 2 (Feb 9-13)</td>
+                  <td><div style="background:#DCFCE7;color:#16a34a;padding:6px 10px;border-radius:6px;text-align:center;font-size:12px;font-weight:700;">85%</div></td>
+                  <td><div style="background:#FEF3C7;color:#d97706;padding:6px 10px;border-radius:6px;text-align:center;font-size:12px;font-weight:700;">79%</div></td>
+                  <td><div style="background:#DCFCE7;color:#16a34a;padding:6px 10px;border-radius:6px;text-align:center;font-size:12px;font-weight:700;">83%</div></td>
+                  <td><div style="background:#DCFCE7;color:#16a34a;padding:6px 10px;border-radius:6px;text-align:center;font-size:12px;font-weight:700;">88%</div></td>
+                  <td><div style="background:#FEE2E2;color:var(--danger);padding:6px 10px;border-radius:6px;text-align:center;font-size:12px;font-weight:700;">72%</div></td>
+                  <td style="font-weight:700;color:var(--warning);">81%</td>
+                </tr>
+                <tr><td style="font-weight:600;font-size:12px;">Week 3 (Feb 16-17)</td>
+                  <td><div style="background:#FEE2E2;color:var(--danger);padding:6px 10px;border-radius:6px;text-align:center;font-size:12px;font-weight:700;">74%</div></td>
+                  <td><div style="background:#DCFCE7;color:#16a34a;padding:6px 10px;border-radius:6px;text-align:center;font-size:12px;font-weight:700;">82%</div></td>
+                  <td colspan="3" style="color:var(--text-light);font-size:12px;text-align:center;">— Pending —</td>
+                  <td style="font-weight:700;color:var(--warning);">78%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE: ADMIN USER MANAGEMENT -->
+<!-- ======================================================= -->
+<div id="admin-usermgmt" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">Admin Panel</div></div></div>
+    <div class="sidebar-section-label">Overview</div>
+    <div class="sidebar-item"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item"><span class="si-icon">👥</span> All Employees</div>
+    <div class="sidebar-item"><span class="si-icon">📊</span> Departments</div>
+    <div class="sidebar-section-label">Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📤</span> Export Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-section-label">Management</div>
+    <div class="sidebar-item active"><span class="si-icon">⚙️</span> User Management</div>
+    <div class="sidebar-item"><span class="si-icon">🔔</span> Alerts <span class="badge">3</span></div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div><div class="sidebar-user-info"><div class="sidebar-user-name">Admin User</div><div class="sidebar-user-role">HR Administrator</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">User Management</div>
+      <div class="search-bar" style="margin-left:auto;width:260px;"><span class="search-icon">🔍</span><input placeholder="Search users..."></div>
+      <div class="topbar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div>
+    </div>
+    <div class="page-content">
+
+      <!-- Summary Cards -->
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);">
+        <div class="stat-card blue" style="padding:16px;gap:6px;"><div class="stat-icon blue">👥</div><div class="stat-label">Total Users</div><div class="stat-value" style="font-size:26px;">124</div></div>
+        <div class="stat-card green" style="padding:16px;gap:6px;"><div class="stat-icon green">✅</div><div class="stat-label">Active</div><div class="stat-value" style="font-size:26px;color:var(--success);">118</div></div>
+        <div class="stat-card red" style="padding:16px;gap:6px;"><div class="stat-icon red">🚫</div><div class="stat-label">Inactive</div><div class="stat-value" style="font-size:26px;color:var(--danger);">6</div></div>
+        <div class="stat-card amber" style="padding:16px;gap:6px;"><div class="stat-icon amber">⏳</div><div class="stat-label">Pending Verification</div><div class="stat-value" style="font-size:26px;color:var(--warning);">3</div></div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tab-row" style="width:fit-content;margin-bottom:16px;">
+        <button class="tab-btn active" style="padding:9px 20px;">All Users (124)</button>
+        <button class="tab-btn" style="padding:9px 20px;">Active (118)</button>
+        <button class="tab-btn" style="padding:9px 20px;">Inactive (6)</button>
+        <button class="tab-btn" style="padding:9px 20px;">⏳ Pending (3)</button>
+      </div>
+
+      <div class="filter-row">
+        <select class="filter-select"><option>All Departments</option><option>Engineering</option><option>HR</option></select>
+        <select class="filter-select"><option>All Auth Types</option><option>LDAP</option><option>Standard</option></select>
+        <select class="filter-select"><option>All Roles</option><option>Employee</option><option>Admin</option></select>
+        <button class="filter-btn">Filter</button>
+      </div>
+
+      <!-- Users Table -->
+      <div class="card">
+        <div class="card-body" style="padding:0 0 16px;">
+          <div class="table-wrap" style="padding:0 16px;">
+            <table>
+              <thead><tr><th><input type="checkbox"></th><th>User</th><th>Employee ID</th><th>Department</th><th>Auth Type</th><th>Role</th><th>Last Login</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td><div class="user-cell"><div class="user-ava" style="background:#3B6FE0;">JD</div><div><div class="user-name">John Doe</div><div class="user-email">john.doe@company.com</div></div></div></td>
+                  <td>EMP-0042</td><td>Engineering</td>
+                  <td><span class="badge" style="background:#EEF3FF;color:var(--primary);">🏢 LDAP</span></td>
+                  <td><span class="badge" style="background:#F3F4F6;color:#374151;">Employee</span></td>
+                  <td style="color:var(--text-light);font-size:12px;">Today 09:02</td>
+                  <td><span class="badge active">Active</span></td>
+                  <td><div style="display:flex;gap:4px;"><button class="action-btn ghost" style="padding:4px 8px;font-size:11px;">👁</button><button class="action-btn ghost" style="padding:4px 8px;font-size:11px;color:var(--warning);">🔒</button></div></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td><div class="user-cell"><div class="user-ava" style="background:#22C55E;">AS</div><div><div class="user-name">Alice Smith</div><div class="user-email">alice.smith@company.com</div></div></div></td>
+                  <td>EMP-0018</td><td>HR</td>
+                  <td><span class="badge" style="background:#EEF3FF;color:var(--primary);">🏢 LDAP</span></td>
+                  <td><span class="badge" style="background:#FEE2E2;color:var(--danger);">Admin</span></td>
+                  <td style="color:var(--text-light);font-size:12px;">Today 08:55</td>
+                  <td><span class="badge active">Active</span></td>
+                  <td><div style="display:flex;gap:4px;"><button class="action-btn ghost" style="padding:4px 8px;font-size:11px;">👁</button><button class="action-btn ghost" style="padding:4px 8px;font-size:11px;color:var(--warning);">🔒</button></div></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td><div class="user-cell"><div class="user-ava" style="background:#F59E0B;">RK</div><div><div class="user-name">Raj Kumar</div><div class="user-email">raj.kumar@company.com</div></div></div></td>
+                  <td>EMP-0031</td><td>Finance</td>
+                  <td><span class="badge" style="background:#DCFCE7;color:#16a34a;">📧 Standard</span></td>
+                  <td><span class="badge" style="background:#F3F4F6;color:#374151;">Employee</span></td>
+                  <td style="color:var(--text-light);font-size:12px;">Feb 15, 09:18</td>
+                  <td><span class="badge active">Active</span></td>
+                  <td><div style="display:flex;gap:4px;"><button class="action-btn ghost" style="padding:4px 8px;font-size:11px;">👁</button><button class="action-btn ghost" style="padding:4px 8px;font-size:11px;color:var(--warning);">🔒</button></div></td>
+                </tr>
+                <tr style="opacity:0.6;">
+                  <td><input type="checkbox"></td>
+                  <td><div class="user-cell"><div class="user-ava" style="background:#9CA3AF;">MP</div><div><div class="user-name">Maria Perez</div><div class="user-email">m.perez@company.com</div></div></div></td>
+                  <td>EMP-0055</td><td>Marketing</td>
+                  <td><span class="badge" style="background:#DCFCE7;color:#16a34a;">📧 Standard</span></td>
+                  <td><span class="badge" style="background:#F3F4F6;color:#374151;">Employee</span></td>
+                  <td style="color:var(--text-light);font-size:12px;">Jan 20, 10:30</td>
+                  <td><span class="badge inactive">Inactive</span></td>
+                  <td><div style="display:flex;gap:4px;"><button class="action-btn ghost" style="padding:4px 8px;font-size:11px;">👁</button><button class="action-btn success" style="padding:4px 8px;font-size:11px;">✅ Activate</button></div></td>
+                </tr>
+                <tr style="background:#FFFBEB;">
+                  <td><input type="checkbox"></td>
+                  <td><div class="user-cell"><div class="user-ava" style="background:#F59E0B;">NR</div><div><div class="user-name">Nisha Rao</div><div class="user-email">nisha.r@company.com</div></div></div></td>
+                  <td>EMP-0112</td><td>Operations</td>
+                  <td><span class="badge" style="background:#DCFCE7;color:#16a34a;">📧 Standard</span></td>
+                  <td><span class="badge" style="background:#F3F4F6;color:#374151;">Employee</span></td>
+                  <td style="color:var(--text-light);font-size:12px;">Never</td>
+                  <td><span class="badge late">Pending</span></td>
+                  <td><div style="display:flex;gap:4px;"><button class="action-btn success" style="padding:4px 8px;font-size:11px;">✅ Approve</button><button class="action-btn ghost" style="padding:4px 8px;font-size:11px;color:var(--danger);">❌</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Bulk Actions + Pagination -->
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 20px 0;border-top:1px solid var(--border);margin-top:8px;flex-wrap:wrap;gap:10px;">
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span style="font-size:12px;color:var(--text-light);">Bulk Actions:</span>
+              <button class="action-btn ghost" style="font-size:12px;">🔒 Deactivate Selected</button>
+              <button class="action-btn ghost" style="font-size:12px;color:var(--success);">✅ Activate Selected</button>
+            </div>
+            <div style="display:flex;gap:4px;">
+              <button class="action-btn ghost" style="padding:5px 10px;">‹</button>
+              <button class="action-btn primary" style="padding:5px 10px;">1</button>
+              <button class="action-btn ghost" style="padding:5px 10px;">2</button>
+              <button class="action-btn ghost" style="padding:5px 10px;">›</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE: ADMIN ALERTS -->
+<!-- ======================================================= -->
+<div id="admin-alerts" class="screen">
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🖐</div><div><div class="sidebar-logo-text">AttendX</div><div class="sidebar-logo-sub">Admin Panel</div></div></div>
+    <div class="sidebar-section-label">Overview</div>
+    <div class="sidebar-item"><span class="si-icon">🏠</span> Dashboard</div>
+    <div class="sidebar-item"><span class="si-icon">👥</span> All Employees</div>
+    <div class="sidebar-item"><span class="si-icon">📊</span> Departments</div>
+    <div class="sidebar-section-label">Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📤</span> Export Reports</div>
+    <div class="sidebar-item"><span class="si-icon">📈</span> Analytics</div>
+    <div class="sidebar-section-label">Management</div>
+    <div class="sidebar-item"><span class="si-icon">⚙️</span> User Management</div>
+    <div class="sidebar-item active"><span class="si-icon">🔔</span> Alerts <span class="badge">3</span></div>
+    <div class="sidebar-bottom"><div class="sidebar-user"><div class="sidebar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div><div class="sidebar-user-info"><div class="sidebar-user-name">Admin User</div><div class="sidebar-user-role">HR Administrator</div></div></div></div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Alerts & Notifications</div>
+      <button class="action-btn ghost" style="margin-left:auto;">✅ Mark All Read</button>
+      <div class="topbar-avatar" style="background:linear-gradient(135deg,#EF4444,#F87171);">AD</div>
+    </div>
+    <div class="page-content">
+      <!-- Alert Summary -->
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);">
+        <div class="stat-card red" style="padding:16px;gap:6px;"><div class="stat-icon red">🚨</div><div class="stat-label">Critical</div><div class="stat-value" style="font-size:26px;color:var(--danger);">2</div></div>
+        <div class="stat-card amber" style="padding:16px;gap:6px;"><div class="stat-icon amber">⚠️</div><div class="stat-label">Warnings</div><div class="stat-value" style="font-size:26px;color:var(--warning);">5</div></div>
+        <div class="stat-card blue" style="padding:16px;gap:6px;"><div class="stat-icon blue">ℹ️</div><div class="stat-label">Info</div><div class="stat-value" style="font-size:26px;">8</div></div>
+        <div class="stat-card green" style="padding:16px;gap:6px;"><div class="stat-icon green">✅</div><div class="stat-label">Resolved</div><div class="stat-value" style="font-size:26px;color:var(--success);">24</div></div>
+      </div>
+
+      <div class="grid-6-4">
+        <!-- ALERTS FEED -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🔔 Recent Alerts</div>
+            <div class="tab-row" style="margin:0;padding:2px;width:auto;">
+              <button class="tab-btn active" style="padding:5px 12px;font-size:12px;">All</button>
+              <button class="tab-btn" style="padding:5px 12px;font-size:12px;">Unread</button>
+            </div>
+          </div>
+          <div class="card-body" style="padding:0;display:flex;flex-direction:column;gap:0;">
+
+            <!-- CRITICAL Alert -->
+            <div style="padding:14px 20px;border-bottom:1px solid var(--border);border-left:4px solid var(--danger);background:#FFFAFB;">
+              <div style="display:flex;align-items:flex-start;gap:12px;">
+                <div style="width:36px;height:36px;border-radius:50%;background:var(--danger-light);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🚨</div>
+                <div style="flex:1;">
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                    <span style="font-size:13px;font-weight:700;color:var(--text-dark);">Department Below 70% Threshold</span>
+                    <span class="badge absent" style="font-size:10px;">Critical</span>
+                    <span style="background:#FEF3C7;color:#92400e;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;">Unread</span>
+                  </div>
+                  <div style="font-size:12.5px;color:var(--text-mid);">Marketing Department attendance has fallen to 68% — below the 70% minimum threshold. Immediate review required.</div>
+                  <div style="font-size:11.5px;color:var(--text-light);margin-top:6px;">📅 Feb 17, 2026 · 10:30 AM</div>
+                  <div style="display:flex;gap:8px;margin-top:10px;">
+                    <button class="action-btn primary" style="font-size:12px;">View Department →</button>
+                    <button class="action-btn ghost" style="font-size:12px;">✅ Mark Resolved</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CRITICAL Alert 2 -->
+            <div style="padding:14px 20px;border-bottom:1px solid var(--border);border-left:4px solid var(--danger);background:#FFFAFB;">
+              <div style="display:flex;align-items:flex-start;gap:12px;">
+                <div style="width:36px;height:36px;border-radius:50%;background:var(--danger-light);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🚨</div>
+                <div style="flex:1;">
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                    <span style="font-size:13px;font-weight:700;">Employee: 8 Days Absent</span>
+                    <span class="badge absent" style="font-size:10px;">Critical</span>
+                    <span style="background:#FEF3C7;color:#92400e;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;">Unread</span>
+                  </div>
+                  <div style="font-size:12.5px;color:var(--text-mid);">Maria Perez (EMP-0055, Marketing) has been absent 8 days this month without any leave record in the system.</div>
+                  <div style="font-size:11.5px;color:var(--text-light);margin-top:6px;">📅 Feb 17, 2026 · 09:15 AM</div>
+                  <div style="display:flex;gap:8px;margin-top:10px;">
+                    <button class="action-btn primary" style="font-size:12px;">View Employee →</button>
+                    <button class="action-btn ghost" style="font-size:12px;">📧 Send Email</button>
+                    <button class="action-btn ghost" style="font-size:12px;">✅ Resolve</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- WARNING Alert -->
+            <div style="padding:14px 20px;border-bottom:1px solid var(--border);border-left:4px solid var(--warning);">
+              <div style="display:flex;align-items:flex-start;gap:12px;">
+                <div style="width:36px;height:36px;border-radius:50%;background:var(--warning-light);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">⚠️</div>
+                <div style="flex:1;">
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                    <span style="font-size:13px;font-weight:700;">High Late Arrivals in Finance</span>
+                    <span class="badge late" style="font-size:10px;">Warning</span>
+                  </div>
+                  <div style="font-size:12.5px;color:var(--text-mid);">Finance department has recorded 11 late arrivals this month — 40% above the department average.</div>
+                  <div style="font-size:11.5px;color:var(--text-light);margin-top:6px;">📅 Feb 16, 2026 · 06:00 PM</div>
+                  <div style="display:flex;gap:8px;margin-top:10px;">
+                    <button class="action-btn ghost" style="font-size:12px;">View Report →</button>
+                    <button class="action-btn ghost" style="font-size:12px;">✅ Resolve</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- INFO Alert -->
+            <div style="padding:14px 20px;border-bottom:1px solid var(--border);border-left:4px solid var(--primary);">
+              <div style="display:flex;align-items:flex-start;gap:12px;">
+                <div style="width:36px;height:36px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">ℹ️</div>
+                <div style="flex:1;">
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                    <span style="font-size:13px;font-weight:700;">3 New Users Pending Verification</span>
+                    <span class="badge" style="background:var(--primary-light);color:var(--primary);font-size:10px;">Info</span>
+                  </div>
+                  <div style="font-size:12.5px;color:var(--text-mid);">3 employees have registered accounts and are awaiting admin verification before they can access the portal.</div>
+                  <div style="font-size:11.5px;color:var(--text-light);margin-top:6px;">📅 Feb 15, 2026 · 02:45 PM</div>
+                  <div style="display:flex;gap:8px;margin-top:10px;">
+                    <button class="action-btn primary" style="font-size:12px;">Review Users →</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- INFO Alert 2 - READ -->
+            <div style="padding:14px 20px;border-bottom:1px solid var(--border);border-left:4px solid var(--border);opacity:0.65;">
+              <div style="display:flex;align-items:flex-start;gap:12px;">
+                <div style="width:36px;height:36px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📊</div>
+                <div style="flex:1;">
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                    <span style="font-size:13px;font-weight:700;">January Monthly Report Ready</span>
+                    <span class="badge inactive" style="font-size:10px;">Read</span>
+                  </div>
+                  <div style="font-size:12.5px;color:var(--text-mid);">January 2026 attendance report has been generated and is ready for download.</div>
+                  <div style="font-size:11.5px;color:var(--text-light);margin-top:6px;">📅 Feb 1, 2026 · 12:00 AM</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT PANEL: Settings + Summary -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+
+          <!-- Alert Settings -->
+          <div class="card">
+            <div class="card-header"><div class="card-title">⚙️ Alert Settings</div></div>
+            <div class="card-body">
+              <div style="font-size:12px;color:var(--text-light);margin-bottom:12px;">Configure when to receive alerts</div>
+              <div style="display:flex;flex-direction:column;gap:0;">
+                <div class="info-row" style="justify-content:space-between;padding:10px 0;">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;">Dept below threshold</div>
+                    <div style="font-size:11px;color:var(--text-light);">When attendance &lt; 70%</div>
+                  </div>
+                  <div style="width:40px;height:22px;background:var(--primary);border-radius:99px;position:relative;cursor:pointer;"><div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;right:2px;top:2px;"></div></div>
+                </div>
+                <div class="info-row" style="justify-content:space-between;padding:10px 0;">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;">Employee absent 3+ days</div>
+                    <div style="font-size:11px;color:var(--text-light);">Consecutive absences</div>
+                  </div>
+                  <div style="width:40px;height:22px;background:var(--primary);border-radius:99px;position:relative;cursor:pointer;"><div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;right:2px;top:2px;"></div></div>
+                </div>
+                <div class="info-row" style="justify-content:space-between;padding:10px 0;">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;">New user registration</div>
+                    <div style="font-size:11px;color:var(--text-light);">Pending approvals</div>
+                  </div>
+                  <div style="width:40px;height:22px;background:var(--primary);border-radius:99px;position:relative;cursor:pointer;"><div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;right:2px;top:2px;"></div></div>
+                </div>
+                <div class="info-row" style="justify-content:space-between;padding:10px 0;border:none;">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;">Monthly report ready</div>
+                    <div style="font-size:11px;color:var(--text-light);">Auto-generated reports</div>
+                  </div>
+                  <div style="width:40px;height:22px;background:var(--border);border-radius:99px;position:relative;cursor:pointer;"><div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;left:2px;top:2px;"></div></div>
+                </div>
+              </div>
+              <button class="btn-primary" style="margin-top:8px;">Save Settings</button>
+            </div>
+          </div>
+
+          <!-- Alert Threshold Config -->
+          <div class="card">
+            <div class="card-header"><div class="card-title">🎛️ Threshold Config</div></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="form-label">Min Attendance Rate (%)</label>
+                <input class="form-input filled" value="70" readonly style="font-weight:700;font-size:16px;">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Late Arrival Limit (per month)</label>
+                <input class="form-input filled" value="5" readonly style="font-weight:700;font-size:16px;">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Consecutive Absence Alert</label>
+                <input class="form-input filled" value="3 days" readonly style="font-weight:700;font-size:16px;">
+              </div>
+              <button class="action-btn primary" style="width:100%;justify-content:center;">Update Thresholds</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div><!-- page-wrapper end -->
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  function showPage(id) {
+    document.querySelectorAll('.screen').forEach(s => { s.style.display = 'none'; s.classList.remove('active'); });
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) { target.style.display = 'flex'; target.classList.add('active'); }
+    event.target.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.screen').forEach(s => {
+      if (!s.classList.contains('active')) s.style.display = 'none';
+    });
+  });
+</script>
+</body>
+</html>
